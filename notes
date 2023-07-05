@@ -10,3 +10,12 @@ check if user isBlocked
 user
     add post
         check if user has reached max number of posts
+        does it mean nobody can post if maxPostCount has met
+
+required to show images in img tag
+    php artisan storage:link
+
+make migration
+    php artisan make:migration create_comments_table
+show model
+    php artisan model:show User
