@@ -1,0 +1,12 @@
+use: 
+Use Git & GitHub
+Repository Pattern (For Laravel)
+Advanced Routing (For Laravel)
+Service Providers (For Laravel)
+
+on login
+check if user isBlocked
+
+user
+    add post
+        check if user has reached max number of posts
