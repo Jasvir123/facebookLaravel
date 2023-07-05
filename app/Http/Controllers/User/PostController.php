@@ -54,10 +54,10 @@ class PostController extends Controller
     public function storeComment(Request $request)
     {
         $request->validate([
-            'post_id' => ['required','integer'],
+            'post_id' => ['required', 'integer'],
             'comment' => ['required', 'string', 'max:4000']
         ]);
-        
+
         Comment::create([
             'user_id' => $request->user()->id,
             'post_id' => $request->post_id,
@@ -69,8 +69,7 @@ class PostController extends Controller
 
     public function viewPosts(): View
     {
-        $posts = Post::with('user', 'comment')->orderByDesc('created_at')->get();
-
+        $posts = Post::with('user', 'comment', 'comment.user')->orderByDesc('created_at')->get();
         return view('user.posts', compact('posts'));
     }
 }

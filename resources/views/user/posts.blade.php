@@ -8,10 +8,13 @@
 
                 <span class="text-gray-700 p-2">{{ $post->description }}</span>
 
-                <div class="my-1 flex flex-col justify-center bg-gradient-to-r from-cyan-100 rounded-md p-2">
-                    <span class="text-xs">Dummy Commented By</span>
-                    <span class="mx-5 text-sm p-2">Dummy Comment</span>
-                </div>
+                @forelse ($post->comment as $comment)
+                    <div class="my-1 flex flex-col justify-center bg-gradient-to-r from-cyan-100 rounded-md p-2">
+                        <span class="text-xs">{{ $comment->user->name }}</span>
+                        <span class="mx-5 text-sm p-2">{{ $comment->comment }}</span>
+                    </div>
+                @empty
+                @endforelse
 
 
 
@@ -20,7 +23,7 @@
                     @csrf
                     <x-textarea id="comment" class="mt-6 block mt-1 w-full" name="comment" :value="old('comment')" required
                         autofocus autocomplete="comment" />
-                    <input type="hidden" name="post_id" value="{{$post->id}}">
+                    <input type="hidden" name="post_id" value="{{ $post->id }}">
                     <x-primary-button class="flex mt-3 ml-4 self-end">
                         {{ __('Add Comment') }}
                     </x-primary-button>
