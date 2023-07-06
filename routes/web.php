@@ -29,17 +29,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware('admin')->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return "<p>admin dashboard</p>";
-    });
-});
-
-Route::middleware('user')->group(function () {
-    Route::get('/user/dashboard', function () {
-        return "<p>user dashboard</p>";
-    });
-});
-
 require __DIR__ . '/auth.php';
 require __DIR__ . '/post.php';
+require __DIR__ . '/user.php';

@@ -37,4 +37,13 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
     }
+
+    public static function getHome(): string
+    {
+        $home = 'dashboard';
+        if(auth()->user()->hasRole('admin')) {
+            $home = 'admin/dashboard';
+        }
+        return $home;
+    }
 }
