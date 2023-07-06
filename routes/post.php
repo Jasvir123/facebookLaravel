@@ -3,10 +3,12 @@
 use App\Http\Controllers\User\PostController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/createPost', [PostController::class, 'createPost'])->middleware(['auth', 'verified'])->name('createPost');
+Route::middleware('auth')->group(function () {
+    Route::get('/createPost', [PostController::class, 'createPost'])->name('createPost');
 
-Route::post('/storePost', [PostController::class, 'storePost'])->middleware(['auth', 'verified'])->name('storePost');
+    Route::post('/storePost', [PostController::class, 'storePost'])->name('storePost');
 
-Route::get('/posts', [PostController::class, 'viewPosts'])->middleware(['auth', 'verified'])->name('posts');
+    Route::get('/posts', [PostController::class, 'viewPosts'])->name('posts');
 
-Route::post('/storeComment', [PostController::class, 'storeComment'])->middleware(['auth', 'verified'])->name('storeComment');
+    Route::post('/storeComment', [PostController::class, 'storeComment'])->name('storeComment');
+});
