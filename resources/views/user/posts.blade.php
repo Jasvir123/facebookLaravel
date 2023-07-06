@@ -1,8 +1,22 @@
 <x-app-layout>
     <div class="container mx-auto">
+
         @forelse ($posts as $post)
+
             <div class="mx-10 my-2 post flex flex-col justify-center bg-gradient-to-r from-slate-350 rounded-lg p-4">
-                <span class="text-black font-bold mb-2">{{ $post->user->name }}</span>
+
+                <div class="post-header flex items-center justify-between mb-2">
+                    <span class="text-black font-bold">{{ $post->user->name }}</span>
+                    @role('admin')
+                    <form action="{{ route('deletePost', ['post_id' => $post->id]) }}" method="get">
+                        <x-primary-button>
+                            {{ __('Delete Post') }}
+                        </x-primary-button>
+                    </form>
+                    @endrole
+                </div>
+
+
                 <img class="rounded-lg" src="{{ !empty($post->media) ? Storage::url($post->media) : '' }}"
                     alt="Post Image">
 
@@ -13,31 +27,33 @@
                         <span class="text-xs">{{ $comment->user->name }}</span>
                         <span class="mx-5 text-sm p-2">{{ $comment->comment }}</span>
                     </div>
+
                 @empty
                 @endforelse
 
-
-
-                {{-- <button class="mt-3 self-end bg-gradient-to-r from-blue-500 hover:from-blue-600 text-white font-bold py-2 px-4 rounded" id="addComment">Add Comment</button> --}}
                 <form class="flex flex-col justify-center" method="POST" action="{{ route('storeComment') }}">
                     @csrf
                     <x-textarea id="comment" class="mt-6 block mt-1 w-full" name="comment" :value="old('comment')" required
                         autofocus autocomplete="comment" />
                     <x-input-error :messages="$errors->get('comment')" class="mt-2" />
-                        
+
                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                     <x-primary-button class="flex mt-3 ml-4 self-end">
                         {{ __('Add Comment') }}
                     </x-primary-button>
                 </form>
+
             </div>
         @empty
             <p>
                 No posts found.
             </p>
         @endforelse
+
     </div>
+
     @push('scripts')
         <script src="{{ asset('js/posts.js') }}"></script>
     @endpush
+
 </x-app-layout>

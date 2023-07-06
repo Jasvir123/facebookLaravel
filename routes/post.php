@@ -12,3 +12,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/storeComment', [PostController::class, 'storeComment'])->name('storeComment');
 });
+
+Route::middleware('admin')->group(function () {
+    Route::get('/deletePost/{post_id}', [PostController::class, 'deletePost'])->name('deletePost');
+});

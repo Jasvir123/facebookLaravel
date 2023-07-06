@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
@@ -20,8 +21,6 @@ class PostController extends Controller
      */
     public function createPost(): View
     {
-        // Post::query()->truncate();
-
         return view('user.createPost');
     }
 
@@ -51,7 +50,7 @@ class PostController extends Controller
         return Redirect::to('posts');
     }
 
-    public function storeComment(Request $request)
+    public function storeComment(Request $request): RedirectResponse
     {
         $request->validate([
             'post_id' => ['required', 'integer'],
@@ -71,5 +70,14 @@ class PostController extends Controller
     {
         $posts = Post::with('user', 'comment', 'comment.user')->orderByDesc('created_at')->get();
         return view('user.posts', compact('posts'));
+    }
+
+    public function deletePost($post_id): RedirectResponse
+    {
+
+        $post = Post::find($post_id);
+        $post->delete();
+
+        return Redirect::to('posts');
     }
 }
