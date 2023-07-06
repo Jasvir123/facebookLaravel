@@ -4,9 +4,9 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
+    
     <x-card>
-        Total Users: {{$userCount}}
+        {{ __('Total Users: ') }} {{$userCount}}
     </x-card>
 
 </x-app-layout>
