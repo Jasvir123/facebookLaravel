@@ -11,9 +11,17 @@ get data from service providers
 
 try to get timezone from .env instead of hard coding in app.php
 
+combine posts and comments
+click on posts then open comments
+
+skip sending email
+
 Queries / Doubts:
 Do we need to create 'invalidLoginAttempts' in users table?
+    not required
+
 Because block on consecutive invalid login attempt functionality is already available in laravel using cache
+    make duration same as requirement
 
 on login
 check if user isBlocked
