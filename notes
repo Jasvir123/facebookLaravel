@@ -4,6 +4,17 @@ Repository Pattern (For Laravel)
 Advanced Routing (For Laravel)
 Service Providers (For Laravel)
 
+let validation be in controller
+shift insert update and other code in repos
+get data from service providers
+
+
+try to get timezone from .env instead of hard coding in app.php
+
+Queries / Doubts:
+Do we need to create 'invalidLoginAttempts' in users table?
+Because block on consecutive invalid login attempt functionality is already available in laravel using cache
+
 on login
 check if user isBlocked
 
@@ -15,10 +26,15 @@ user
 required to show images in img tag
     php artisan storage:link
 
-make migration
-    php artisan make:migration create_comments_table
-show model
-    php artisan model:show User
+### make migration
+
+#### create table
+`php artisan make:migration create_comments_table`
+#### alter table
+`php artisan make:migration add_columns_to_users --table=users`
+
+### show model
+`php artisan model:show User`
 
 
 ## Set up Roles
@@ -54,10 +70,10 @@ show model
 `$role = Role::create(['name' => 'user']);`
 `$user->assignRole($role);`
 
-#### use role
+#### use / check role
 `$user = $request->user();`
 `$role = $user->getRoleNames()->first();`
-
-// or
-
+or
 `$role = $user->roles->first()->name;`
+or
+`auth()->user()->hasRole('admin')`
