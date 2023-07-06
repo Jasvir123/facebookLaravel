@@ -53,9 +53,4 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::getHome());
     }
-
-    public function adminDashboard(): View
-    {
-        return view('admin.dashboard');
-    }
 }
