@@ -23,6 +23,8 @@
                     @csrf
                     <x-textarea id="comment" class="mt-6 block mt-1 w-full" name="comment" :value="old('comment')" required
                         autofocus autocomplete="comment" />
+                    <x-input-error :messages="$errors->get('comment')" class="mt-2" />
+                        
                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                     <x-primary-button class="flex mt-3 ml-4 self-end">
                         {{ __('Add Comment') }}
