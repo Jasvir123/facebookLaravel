@@ -19,3 +19,45 @@ make migration
     php artisan make:migration create_comments_table
 show model
     php artisan model:show User
+
+
+## Set up Roles
+`composer require spatie/laravel-permission`
+
+`php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"`
+`php artisan migrate`
+
+#### Create following model
+`namespace App\Models;`
+
+`use Spatie\Permission\Models\Role as SpatieRole;`
+
+`class Role extends SpatieRole`
+`{`
+    `// Additional customization if needed`
+`}`
+
+#### in User model. Add following lines:
+
+`use Spatie\Permission\Traits\HasRoles;`
+
+`use HasRoles`
+
+#### Create a role
+
+`Role::create(['name' => 'user']);`
+
+#### When user registers
+
+`use Spatie\Permission\Models\Role;`
+
+`$role = Role::create(['name' => 'user']);`
+`$user->assignRole($role);`
+
+#### use role
+`$user = $request->user();`
+`$role = $user->getRoleNames()->first();`
+
+// or
+
+`$role = $user->roles->first()->name;`
