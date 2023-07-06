@@ -1,5 +1,10 @@
 <x-app-layout>
     <div class="container mx-auto">
+        @if (session('success'))
+            <p>
+                {{ session('success') }}
+            </p>
+        @endif
 
         @forelse ($posts as $post)
 
@@ -8,11 +13,13 @@
                 <div class="post-header flex items-center justify-between mb-2">
                     <span class="text-black font-bold">{{ $post->user->name }}</span>
                     @role('admin')
-                    <form action="{{ route('deletePost', ['post_id' => $post->id]) }}" method="get">
-                        <x-primary-button>
-                            {{ __('Delete Post') }}
-                        </x-primary-button>
-                    </form>
+                        <form action="{{ route('posts.destroy', $post) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <x-primary-button>
+                                {{ __('Delete Post') }}
+                            </x-primary-button>
+                        </form>
                     @endrole
                 </div>
 

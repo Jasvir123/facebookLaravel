@@ -72,12 +72,9 @@ class PostController extends Controller
         return view('user.posts', compact('posts'));
     }
 
-    public function deletePost($post_id): RedirectResponse
+    public function destroy(Post $post): RedirectResponse
     {
-
-        $post = Post::find($post_id);
         $post->delete();
-
-        return Redirect::to('posts');
+        return Redirect::to('posts')->with('success', 'Post deleted successfully');;
     }
 }
