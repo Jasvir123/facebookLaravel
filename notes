@@ -1,87 +1,90 @@
-use: 
-Use Git & GitHub
-Repository Pattern (For Laravel)
-Advanced Routing (For Laravel)
-Service Providers (For Laravel)
+## Todo
 
-let validation be in controller
-shift insert update and other code in repos
-get data from service providers
+- let validation be in controller
+- shift insert update and other code in repos
+- get data from service providers
+
+## Changes in assignment
+
+- combine posts and comments
+    - Show posts, when post is clicked, show comments in pop up / modal
+- skip sending email
+- `invalidLoginAttempts` column is not required. It is managed by Laravel itself. Make sure to keep the timeout settings as requirement
+
+## Improvements
+
+- try to get timezone from .env instead of hard coding in app.php
+
+### Conditions to implement
+
+#### On login
+
+- check if user isBlocked AND isActive
+
+#### On Add Post
+- check if user has reached max number of posts
+
+#### On Like
+- check if user has liked max number of permitted likes
 
 
-try to get timezone from .env instead of hard coding in app.php
+## Useful commands
 
-combine posts and comments
-click on posts then open comments
-
-skip sending email
-
-Queries / Doubts:
-Do we need to create 'invalidLoginAttempts' in users table?
-    not required
-
-Because block on consecutive invalid login attempt functionality is already available in laravel using cache
-    make duration same as requirement
-
-on login
-check if user isBlocked
-
-user
-    add post
-        check if user has reached max number of posts
-        does it mean nobody can post if maxPostCount has met
-
-required to show images in img tag
-    php artisan storage:link
+### required to show images in img tag
+- It links storage with public direcotry\
+>`php artisan storage:link`
 
 ### make migration
 
 #### create table
-`php artisan make:migration create_comments_table`
+>`php artisan make:migration create_comments_table`
 #### alter table
-`php artisan make:migration add_columns_to_users --table=users`
+>`php artisan make:migration add_columns_to_users --table=users`
+
+
+## Modal
 
 ### show model
-`php artisan model:show User`
+>`php artisan model:show User`
 
 
 ## Set up Roles
-`composer require spatie/laravel-permission`
+>`composer require spatie/laravel-permission`
 
-`php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"`
+>`php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"`
 `php artisan migrate`
 
 #### Create following model
-`namespace App\Models;`
-
-`use Spatie\Permission\Models\Role as SpatieRole;`
-
-`class Role extends SpatieRole`
-`{`
-    `// Additional customization if needed`
-`}`
+>`namespace App\Models;`
+>
+>`use Spatie\Permission\Models\Role as SpatieRole;`
+>
+>`class Role extends SpatieRole`\
+>`{`\
+>    `// Additional customization if needed`\
+>`}`
 
 #### in User model. Add following lines:
 
-`use Spatie\Permission\Traits\HasRoles;`
-
-`use HasRoles`
+>`use Spatie\Permission\Traits\HasRoles;`
+>
+>`use HasRoles`
 
 #### Create a role
 
-`Role::create(['name' => 'user']);`
+>`Role::create(['name' => 'user']);`
 
 #### When user registers
 
-`use Spatie\Permission\Models\Role;`
-
-`$role = Role::create(['name' => 'user']);`
-`$user->assignRole($role);`
+>`use Spatie\Permission\Models\Role;`
+>
+>`$role = Role::create(['name' => 'user']);`
+>`$user->assignRole($role);`
 
 #### use / check role
-`$user = $request->user();`
-`$role = $user->getRoleNames()->first();`
+>`$user = $request->user();`
+>`$role = $user->getRoleNames()->first();`
 or
-`$role = $user->roles->first()->name;`
+>`$role = $user->roles->first()->name;`
 or
-`auth()->user()->hasRole('admin')`
+>`auth()->user()->hasRole('admin')`
