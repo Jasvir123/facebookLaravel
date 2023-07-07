@@ -3,10 +3,15 @@
 namespace App\Repositories;
 
 use App\Models\Post;
-use Illuminate\Http\UploadedFile;
+
+use App\Traits\FileStorageTrait;
 
 class PostRepository implements PostRepositoryInterface
 {
+    use FileStorageTrait;
+
+    const STORE_POST_IMAGE_PATH = "public/post/images";
+
     protected $post;
 
     public function __construct(Post $post)
@@ -27,14 +32,14 @@ class PostRepository implements PostRepositoryInterface
     public function create($data)
     {
         $data['user_id'] = auth()->id();
-        $data['media'] = $this->getStorePathFromFile($data['media']);
+        $data['media'] = $this->getStorePathFromFile($data['media'], self::STORE_POST_IMAGE_PATH);
 
         return $this->post->create($data);
     }
 
     public function update($id, $data)
     {
-        $data['media'] = $this->getStorePathFromFile($data['media']);
+        $data['media'] = $this->getStorePathFromFile($data['media'], self::STORE_POST_IMAGE_PATH);
         return $this->post->where('id', $id)->update($data);
     }
 
@@ -46,21 +51,5 @@ class PostRepository implements PostRepositoryInterface
     public function getAllCount()
     {
         return $this->getAll()->count();
-    }
-
-    /**
-     * save file in storage/images
-     * returns string to save in Database
-     *
-     * @param UploadedFile $uploadedFile
-     * @return string
-     */
-    private function getStorePathFromFile(UploadedFile $uploadedFile): string {
-
-        $storePath = "";
-        $fileName = time() . '.' . $uploadedFile->extension();
-        $storePath = $uploadedFile->storeAs('public/images', $fileName);
-
-        return $storePath;
     }
 }

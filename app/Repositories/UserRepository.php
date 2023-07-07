@@ -3,11 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Traits\FileStorageTrait;
 use Spatie\Permission\Models\Role;
 
 class UserRepository implements UserRepositoryInterface
 {
+    use FileStorageTrait;
+
     protected $user;
+
+    const STORE_PROFILE_IMAGE_PATH = "public/profile/images";
 
     public function __construct(User $user)
     {
@@ -26,11 +31,20 @@ class UserRepository implements UserRepositoryInterface
 
     public function create($data)
     {
-        return $this->user->create($data);
+        $data['profileImage'] = $this->getStorePathFromFile($data['profileImage'], self::STORE_PROFILE_IMAGE_PATH);
+
+        $createdUser = $this->user->create($data);
+
+        $role = Role::findByName('user', 'web');
+        $createdUser->assignRole($role);
+
+        return $createdUser;
     }
 
     public function update($id, $data)
     {
+        $data['profileImage'] = $this->getStorePathFromFile($data['profileImage'], self::STORE_PROFILE_IMAGE_PATH);
+
         return $this->user->where('id', $id)->update($data);
     }
 
