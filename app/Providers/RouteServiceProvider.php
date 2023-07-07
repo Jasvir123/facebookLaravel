@@ -40,7 +40,7 @@ class RouteServiceProvider extends ServiceProvider
 
     public static function getHome(): string
     {
-        $home = 'dashboard';
+        $home = 'posts';
         if(auth()->user()->hasRole('admin')) {
             $home = 'admin/dashboard';
         }
