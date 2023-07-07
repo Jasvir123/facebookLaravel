@@ -7,7 +7,7 @@
 - improve file name to store in storage/images
 - add confirm on delete
 - create menus
-- when user logs in, show him posts instead of blank dashboard
+- when user logs in or registers, show redirect to posts instead of blank dashboard
 
 ## Changes in assignment
 
