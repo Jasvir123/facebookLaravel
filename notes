@@ -3,6 +3,8 @@
 - let validation be in controller
 - shift insert update and other code in repos
 - get data from service providers
+- Create Controller and Repo for Comment
+- improve file name to store in storage/images
 
 ## Changes in assignment
 
@@ -14,6 +16,9 @@
 ## Improvements
 
 - try to get timezone from .env instead of hard coding in app.php
+- soft delete
+- indexing
+- 
 
 ### Conditions to implement
 
@@ -88,3 +93,9 @@ or
 >`$role = $user->roles->first()->name;`
 or
 >`auth()->user()->hasRole('admin')`
+
+## Service Provider
+
+### Create Repository RepositoryServiceProvider
+
+>`php artisan make:provider RepositoryServiceProvider`
