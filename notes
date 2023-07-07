@@ -3,9 +3,11 @@
 - let validation be in controller
 - shift insert update and other code in repos
 - get data from service providers
-- Create Controller and Repo for Comment
+- Create seperate Controller and Repo for Comment
 - improve file name to store in storage/images
 - add confirm on delete
+- create menus
+- when user logs in, show him posts instead of blank dashboard
 
 ## Changes in assignment
 
@@ -20,6 +22,10 @@
 - soft delete
 - indexing
 - logout user if he's marked inactive while he's logged in
+
+## Queries
+
+- what does autocomplete attribute do if a custom text is provided
 
 ### Conditions to implement
 
