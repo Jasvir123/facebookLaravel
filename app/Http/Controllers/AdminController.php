@@ -10,51 +10,39 @@ use App\Models\User;
 use App\Models\Post;
 use Spatie\Permission\Models\Role;
 
+use App\Repositories\UserRepositoryInterface;
+use App\Repositories\PostRepositoryInterface;
+
 class AdminController extends Controller
 {
+    protected $userRepository;
+    protected $postRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository, PostRepositoryInterface $postRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->postRepository = $postRepository;
+    }
+
     public function dashboard(): View
     {
-        $userCount = $this->getUserCount();
-        $postsCount = $this->getPostCount();
-        $activeUserCount = $this->getActiveUserCount();
+        $userCount = $this->userRepository->getAllCount();
+        $postsCount = $this->postRepository->getAllCount();
+        $activeUserCount = $this->userRepository->getAllActiveCount();
 
         return view('admin.dashboard', compact('userCount', 'postsCount', 'activeUserCount'));
     }
 
     public function showUsers(): View
     {
-        $users = $this->getUsers();
+        $users = $this->userRepository->getAll();
         return view('admin.showUsers', compact('users'));
     }
 
     public function userToggle(User $user)
     {
-        $user->isActive = !$user->isActive;
-        $user->save();
+        $this->userRepository->userIsActiveToggle($user);
 
         return Redirect::to('admin/showUsers')->with('success', 'User status toggled successfully.');
-    }
-
-    public function getUsers()
-    {
-        return Role::where('name', 'user')->first()->users()->get();
-    }
-
-    public function getUserCount()
-    {
-        return $this->getUsers()->count();
-    }
-
-    public function getActiveUserCount()
-    {
-        $userCount = Role::where('name', 'user')->first()
-            ->users()->where('isActive', '1')->count();
-
-        return $userCount;
-    }
-
-    public function getPostCount()
-    {
-        return Post::count();
     }
 }

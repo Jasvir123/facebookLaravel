@@ -43,6 +43,11 @@ class PostRepository implements PostRepositoryInterface
         return $post->delete();
     }
 
+    public function getAllCount()
+    {
+        return $this->getAll()->count();
+    }
+
     /**
      * save file in storage/images
      * returns string to save in Database
