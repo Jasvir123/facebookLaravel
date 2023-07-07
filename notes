@@ -113,11 +113,3 @@ or
 ### load RepositoryServiceProvider
 - add this provider in config/app.php under providers
 >`App\Providers\RepositoryServiceProvider::class`
-
-
-
-done on 2023-07-07:
-Implemented Repo for Post
-Make use of isActive on login
-Admin can change isActive status of users
-Admin can view total users,active users, total posts
