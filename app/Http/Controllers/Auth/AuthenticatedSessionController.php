@@ -27,6 +27,13 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        $user = auth()->user();
+        if (!$user->isActive) {
+            Auth::logout();
+            return redirect()->back()
+            ->with('inactive', 'Your account is inactive. Please contact the admini for assistance.');
+        }
+
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::getHome());
