@@ -15,7 +15,7 @@ class PostRepository implements PostRepositoryInterface
 
     public function getAll()
     {
-        return $this->post->all();
+        return $this->post::with('user', 'comment', 'comment.user')->orderByDesc('created_at')->get();
     }
 
     public function find($id)
@@ -25,6 +25,16 @@ class PostRepository implements PostRepositoryInterface
 
     public function create($data)
     {
+        $data['user_id'] = auth()->id();
+
+        $media = $data['media'];
+
+        $imageName = time() . '.' . $media->extension();
+        $imagePath = $media->storeAs('public/images', $imageName);
+
+        $data['media'] = $imagePath;
+
+
         return $this->post->create($data);
     }
 
@@ -33,8 +43,8 @@ class PostRepository implements PostRepositoryInterface
         return $this->post->where('id', $id)->update($data);
     }
 
-    public function delete($id)
+    public function delete($post)
     {
-        return $this->post->where('id', $id)->delete();
+        return $post->delete();
     }
 }

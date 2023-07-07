@@ -14,8 +14,17 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\File;
 use Illuminate\View\View;
 
+use App\Repositories\PostRepositoryInterface;
+
 class PostController extends Controller
 {
+    protected $postRepository;
+
+    public function __construct(PostRepositoryInterface $postRepository)
+    {
+        $this->postRepository = $postRepository;
+    }
+
     /**
      * Display the createPost view.
      */
@@ -27,27 +36,19 @@ class PostController extends Controller
     /**
      * Store post in Posts model.
      */
-    public function storePost(Request $request)
+    public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'description' => ['required', 'string', 'max:4000'],
             'media' => ['required', File::types(['jpg', 'png', 'mp4', 'wav'])
                 ->min(1)
                 ->max(12 * 1024),],
             'visibility' => ['required']
         ]);
-        $imageName = time() . '.' . $request->media->extension();
-        $imagePath = $request->media->storeAs('public/images', $imageName);
 
-
-        Post::create([
-            'user_id' => $request->user()->id,
-            'description' => $request->description,
-            'media' => $imagePath,
-            'visibility' => $request->visibility
-        ]);
-
-        return Redirect::to('posts');
+        $this->postRepository->create($data);
+        
+        return Redirect::to('posts')->with('success', 'Post created successfully.');;
     }
 
     public function storeComment(Request $request): RedirectResponse
@@ -66,15 +67,15 @@ class PostController extends Controller
         return Redirect::to('posts');
     }
 
-    public function viewPosts(): View
+    public function index(): View
     {
-        $posts = Post::with('user', 'comment', 'comment.user')->orderByDesc('created_at')->get();
+        $posts = $this->postRepository->getAll();
         return view('user.posts', compact('posts'));
     }
 
     public function destroy(Post $post): RedirectResponse
     {
-        $post->delete();
+        $this->postRepository->delete($post);
         return Redirect::to('posts')->with('success', 'Post deleted successfully');;
     }
 }
