@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container mx-auto">
+    <div class="container mx-auto max-w-2xl">
         @if (session('success'))
             <p>
                 {{ session('success') }}
@@ -8,7 +8,7 @@
 
         @forelse ($posts as $post)
 
-            <div class="mx-10 my-2 post flex flex-col justify-center bg-gradient-to-r from-slate-350 rounded-lg p-4">
+            <div class="mx-10 my-2 post flex flex-col justify-center bg-gradient-to-r from-teal-100 rounded-lg p-4">
 
                 <div class="post-header flex items-center justify-between mb-2">
                     <span class="text-black font-bold">{{ $post->user->name }}</span>
