@@ -11,12 +11,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rules\File;
 use Illuminate\View\View;
 
-use Spatie\Permission\Models\Role;
+use App\Repositories\UserRepositoryInterface;
 
 class RegisteredUserController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository) 
+    {
+        $this->userRepository = $userRepository;
+    }
     /**
      * Display the registration view.
      */
@@ -32,20 +39,21 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'dob' => ['required', 'date', 'before:' . now()->subYears(13)->format('Y-m-d')],
+            'profileImage' => ['required', File::types(['jpg', 'png'])
+                ->min(1)
+                ->max(12 * 1024),],
+            'gender' => ['required','string','max:20'],
+            'address' => 'required|string|max:500',
+            'contactNo' => 'required|string|min:10|max:10',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        $role = Role::findByName('user', 'web');
-        $user->assignRole($role);
+        $user = $this->userRepository->create($data);
 
         event(new Registered($user));
 
