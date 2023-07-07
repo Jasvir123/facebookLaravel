@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Models\User;
-use App\Models\Post;
-use Spatie\Permission\Models\Role;
 
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\PostRepositoryInterface;
