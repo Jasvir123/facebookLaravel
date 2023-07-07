@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Post;
+use Illuminate\Http\UploadedFile;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -26,25 +27,35 @@ class PostRepository implements PostRepositoryInterface
     public function create($data)
     {
         $data['user_id'] = auth()->id();
-
-        $media = $data['media'];
-
-        $imageName = time() . '.' . $media->extension();
-        $imagePath = $media->storeAs('public/images', $imageName);
-
-        $data['media'] = $imagePath;
-
+        $data['media'] = $this->getStorePathFromFile($data['media']);
 
         return $this->post->create($data);
     }
 
     public function update($id, $data)
     {
+        $data['media'] = $this->getStorePathFromFile($data['media']);
         return $this->post->where('id', $id)->update($data);
     }
 
     public function delete($post)
     {
         return $post->delete();
+    }
+
+    /**
+     * save file in storage/images
+     * returns string to save in Database
+     *
+     * @param UploadedFile $uploadedFile
+     * @return string
+     */
+    private function getStorePathFromFile(UploadedFile $uploadedFile): string {
+
+        $storePath = "";
+        $fileName = time() . '.' . $uploadedFile->extension();
+        $storePath = $uploadedFile->storeAs('public/images', $fileName);
+
+        return $storePath;
     }
 }
