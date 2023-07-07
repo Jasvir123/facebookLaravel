@@ -8,6 +8,7 @@
 - add confirm on delete
 - create menus
 - when user logs in or registers, show redirect to posts instead of blank dashboard
+- improve templates structure
 
 ## Changes in assignment
 
