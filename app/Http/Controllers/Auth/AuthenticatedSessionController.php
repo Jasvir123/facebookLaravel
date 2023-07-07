@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
         if (!$user->isActive) {
             Auth::logout();
             return redirect()->back()
-            ->with('inactive', 'Your account is inactive. Please contact the admini for assistance.');
+            ->with('inactive', 'Your account is inactive. Please contact the admin for assistance.');
         }
 
         $request->session()->regenerate();
