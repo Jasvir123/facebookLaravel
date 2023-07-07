@@ -4,9 +4,17 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    
+
     <x-card>
-        {{ __('Total Users: ') }} {{$userCount}}
+        {{ __('Total Users: ') }} {{ $userCount }}
+    </x-card>
+
+    <x-card>
+        {{ __('Active Users: ') }} {{ $activeUserCount }}
+    </x-card>
+
+    <x-card>
+        {{ __('Total Posts: ') }} {{ $postsCount }}
     </x-card>
 
 </x-app-layout>
