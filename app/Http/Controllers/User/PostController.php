@@ -46,9 +46,15 @@ class PostController extends Controller
             'visibility' => ['required']
         ]);
 
-        $this->postRepository->create($data);
 
-        return Redirect::to('posts')->with('success', 'Post created successfully.');;
+        if (!$this->postRepository->canPostToday()) {
+            $message = 'Could not create post. You have created maximum posts for today.';
+        } else {
+            $this->postRepository->create($data);
+            $message = 'Post created successfully.';
+        }
+
+        return Redirect::to('posts')->with('success', $message);
     }
 
     public function storeComment(Request $request): RedirectResponse

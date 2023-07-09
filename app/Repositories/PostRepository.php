@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Models\Post;
 
 use App\Traits\FileStorageTrait;
+use Carbon\Carbon;
+use App\Repositories\SettingRepositoryInterface;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -12,11 +14,12 @@ class PostRepository implements PostRepositoryInterface
 
     const STORE_POST_IMAGE_PATH = "public/post/images";
 
-    protected $post;
+    protected $post, $settingRepository;
 
-    public function __construct(Post $post)
+    public function __construct(Post $post, SettingRepositoryInterface $settingRepository)
     {
         $this->post = $post;
+        $this->settingRepository = $settingRepository;
     }
 
     public function getAll()
@@ -51,5 +54,22 @@ class PostRepository implements PostRepositoryInterface
     public function getAllCount()
     {
         return $this->getAll()->count();
+    }
+
+    public function getCurrentDayPosts()
+    {
+        $today = Carbon::today();
+        return $this->post::whereDate('created_at', $today)->get()->count();
+    }
+
+    public function canPostToday()
+    {
+        $currentDayPosts = $this->getCurrentDayPosts();
+        $currentDayMaxPosts = $this->settingRepository->getCurrentDayMaxPosts();
+
+        if ($currentDayPosts >= $currentDayMaxPosts) {
+            return false;
+        }
+        return true;
     }
 }

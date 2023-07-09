@@ -46,6 +46,14 @@ class SettingRepository implements SettingRepositoryInterface
         return $this->setting->whereDate('created_at', $today)->first();
     }
 
+    public function getCurrentDayMaxPosts(){
+        return $this->getCurrentDaySettings()->maxPostsCount;
+    }
+
+    public function getCurrentDayMaxLikes(){
+        return $this->getCurrentDaySettings()->maxLikesCount;
+    }
+
     public function checkOrCreateForCurrentDay($data)
     {
         $setting = $this->getCurrentDaySettings();
