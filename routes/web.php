@@ -19,3 +19,4 @@ Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['aut
 require __DIR__ . '/auth.php';
 require __DIR__ . '/post.php';
 require __DIR__ . '/user.php';
+require __DIR__ . '/setting.php';

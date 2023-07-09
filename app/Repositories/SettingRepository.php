@@ -38,4 +38,28 @@ class SettingRepository implements SettingRepositoryInterface
     {
         return $setting->delete();
     }
+
+    public function getCurrentDaySettings()
+    {
+        $today = date('Y-m-d');
+        return $this->setting->whereDate('created_at', $today)->first();
+    }
+
+    public function checkOrCreateForCurrentDay($data)
+    {
+        $setting = $this->getCurrentDaySettings();
+
+        if (!$setting) {
+            $setting = $this->setting->create([
+                'maxLikesCount' => $data['maxLikes'],
+                'maxPostsCount' => $data['maxPosts'],
+            ]);
+        } else {
+            $setting->maxLikesCount = $data['maxLikes'];
+            $setting->maxPostsCount = $data['maxPosts'];
+            $setting->save();
+        }
+
+        return $setting;
+    }
 }
