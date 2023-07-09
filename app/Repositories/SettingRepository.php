@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Setting;
+use Carbon\Carbon;
 
 class SettingRepository implements SettingRepositoryInterface
 {
@@ -41,7 +42,7 @@ class SettingRepository implements SettingRepositoryInterface
 
     public function getCurrentDaySettings()
     {
-        $today = date('Y-m-d');
+        $today = Carbon::today();
         return $this->setting->whereDate('created_at', $today)->first();
     }
 
