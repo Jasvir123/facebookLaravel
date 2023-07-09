@@ -5,12 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\File;
 use Illuminate\View\View;
 
@@ -86,6 +83,6 @@ class PostController extends Controller
     public function destroy(Post $post): RedirectResponse
     {
         $this->postRepository->delete($post);
-        return Redirect::to('posts')->with('success', 'Post deleted successfully');;
+        return Redirect::to('posts')->with('success', 'Post deleted successfully');
     }
 }
