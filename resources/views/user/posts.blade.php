@@ -34,6 +34,7 @@
                     @else
                         <i class="far fa-heart"></i>
                     @endif
+                    {{ count($post->postLike) }}
                 </span>
 
                 @forelse ($post->comment as $comment)
