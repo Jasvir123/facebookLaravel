@@ -81,9 +81,16 @@ class PostController extends Controller
 
     public function postLike($post_id): JsonResponse
     {
-        $this->postLikeRepository->postLikeUnlike($post_id);
 
-        return response()->json(['success' => true]);
+        if ($this->postLikeRepository->postLikeUnlike($post_id)) {
+            $messageJson = ['success' => true];
+            $httpStatusCode = 200;
+        } else {
+            $messageJson = ['message' => 'Could not like post. You have liked maximum posts for today'];
+            $httpStatusCode = 403;
+        }
+
+        return response()->json($messageJson, $httpStatusCode);
     }
 
     public function destroy(Post $post): RedirectResponse

@@ -18,7 +18,7 @@
             <!-- Max Likes -->
             <div class="mt-4">
                 <x-input-label for="maxLikes" :value="__('Max Likes')" />
-                <x-text-input id="maxLikes" class="block mt-1 w-full" type="text" name="maxLikes" :value="old('maxLikes') ?? $currentDaySettings->maxLikesCount"
+                <x-text-input id="maxLikes" class="block mt-1 w-full" type="text" name="maxLikes" :value="old('maxLikes') ?? $currentDaySettings->maxLikesCount ?? ''"
                     required autofocus />
                 <x-input-error :messages="$errors->get('maxLikes')" class="mt-2" />
             </div>
@@ -26,7 +26,7 @@
             <!-- Max Posts -->
             <div class="mt-4">
                 <x-input-label for="maxPosts" :value="__('Max Posts')" />
-                <x-text-input id="maxPosts" class="block mt-1 w-full" type="text" name="maxPosts" :value="old('maxPosts') ?? $currentDaySettings->maxPostsCount"
+                <x-text-input id="maxPosts" class="block mt-1 w-full" type="text" name="maxPosts" :value="old('maxPosts') ?? $currentDaySettings->maxPostsCount ?? ''"
                     required autofocus />
                 <x-input-error :messages="$errors->get('maxPosts')" class="mt-2" />
             </div>

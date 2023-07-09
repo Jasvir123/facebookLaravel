@@ -12,7 +12,6 @@ document.querySelectorAll(".like-button").forEach(async (button) => {
         const response = await axios.post(`/posts/${postId}/like`);
   
         // Handle the response
-        console.log(response);
         if (response) {
           // Update the icon class
           if ([...icon.classList].includes("far")) {
@@ -25,7 +24,7 @@ document.querySelectorAll(".like-button").forEach(async (button) => {
         }
       } catch (error) {
         // Handle any errors
-        console.error(error);
+        alert(error.response.data.message);
       } finally {
         // Hide the loader
         loader.classList.remove("show");

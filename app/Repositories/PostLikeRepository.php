@@ -3,15 +3,18 @@
 namespace App\Repositories;
 
 use App\Models\PostLike;
+use Carbon\Carbon;
+use App\Repositories\SettingRepositoryInterface;
 
 class PostLikeRepository implements PostLikeRepositoryInterface
 {
 
-    protected $postLike;
+    protected $postLike, $settingRepository;
 
-    public function __construct(PostLike $postLike)
+    public function __construct(PostLike $postLike, SettingRepositoryInterface $settingRepository)
     {
         $this->postLike = $postLike;
+        $this->settingRepository = $settingRepository;
     }
 
     public function getAll()
@@ -44,7 +47,7 @@ class PostLikeRepository implements PostLikeRepositoryInterface
     {
         $data['user_id'] = auth()->id();
         $data['post_id'] = $post_id;
-        
+
         $postLike = $this->postLike::where(
             ['post_id' => $data['post_id']],
             ['user_id' => $data['user_id']],
@@ -53,6 +56,26 @@ class PostLikeRepository implements PostLikeRepositoryInterface
         if (count($postLike) > 0) {
             return $this->delete($postLike->first());
         }
-        return $this->postLike->create($data);
+        if ($this->canLikeToday()) {
+            return $this->postLike->create($data);
+        }
+        return false;
+    }
+
+    public function getCurrentDayLikes()
+    {
+        $today = Carbon::today();
+        return $this->postLike::whereDate('created_at', $today)->get()->count();
+    }
+
+    public function canLikeToday()
+    {
+        $currentDayLikes = $this->getCurrentDayLikes();
+        $currentDayMaxLikes = $this->settingRepository->getCurrentDayMaxLikes();
+
+        if ($currentDayLikes >= $currentDayMaxLikes) {
+            return false;
+        }
+        return true;
     }
 }
