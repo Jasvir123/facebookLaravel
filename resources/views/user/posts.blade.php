@@ -19,7 +19,7 @@
                         <form action="{{ route('posts.destroy', $post) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <x-primary-button>
+                            <x-primary-button onclick="return confirm('Are you sure?')">
                                 {{ __('Delete Post') }}
                             </x-primary-button>
                         </form>
