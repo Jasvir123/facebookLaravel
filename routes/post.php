@@ -11,9 +11,12 @@ Route::middleware('auth')->group(function () {
     Route::get('posts', [PostController::class, 'index'])->name('posts');
 
     Route::post('storeComment', [PostController::class, 'storeComment'])->name('storeComment');
+
+    Route::post('/posts/{post}/like', [PostController::class, 'postLike'])->name('posts.like');
+
 });
 
 Route::middleware('admin')->group(function () {
-    Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+    Route::delete('posts/{post}/delete', [PostController::class, 'destroy'])->name('posts.destroy');
 
 });

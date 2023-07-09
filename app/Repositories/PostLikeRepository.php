@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\PostLike;
 
-class PostRepository implements PostRepositoryInterface
+class PostLikeRepository implements PostLikeRepositoryInterface
 {
 
     protected $postLike;
@@ -26,7 +26,7 @@ class PostRepository implements PostRepositoryInterface
 
     public function create($data)
     {
-
+        $data['user_id'] = auth()->id();
         return $this->postLike->create($data);
     }
 
@@ -38,5 +38,21 @@ class PostRepository implements PostRepositoryInterface
     public function delete($postLike)
     {
         return $postLike->delete();
+    }
+
+    public function postLikeUnlike($post_id)
+    {
+        $data['user_id'] = auth()->id();
+        $data['post_id'] = $post_id;
+        
+        $postLike = $this->postLike::where(
+            ['post_id' => $data['post_id']],
+            ['user_id' => $data['user_id']],
+        )->get();
+
+        if (count($postLike) > 0) {
+            return $this->delete($postLike->first());
+        }
+        return $this->postLike->create($data);
     }
 }

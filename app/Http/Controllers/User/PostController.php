@@ -15,14 +15,17 @@ use Illuminate\Validation\Rules\File;
 use Illuminate\View\View;
 
 use App\Repositories\PostRepositoryInterface;
+use App\Repositories\PostLikeRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 
 class PostController extends Controller
 {
-    protected $postRepository;
+    protected $postRepository, $postLikeRepository;
 
-    public function __construct(PostRepositoryInterface $postRepository)
+    public function __construct(PostRepositoryInterface $postRepository, PostLikeRepositoryInterface $postLikeRepository)
     {
         $this->postRepository = $postRepository;
+        $this->postLikeRepository = $postLikeRepository;
     }
 
     /**
@@ -47,7 +50,7 @@ class PostController extends Controller
         ]);
 
         $this->postRepository->create($data);
-        
+
         return Redirect::to('posts')->with('success', 'Post created successfully.');;
     }
 
@@ -71,6 +74,13 @@ class PostController extends Controller
     {
         $posts = $this->postRepository->getAll();
         return view('user.posts', compact('posts'));
+    }
+
+    public function postLike($post_id): JsonResponse
+    {
+        $this->postLikeRepository->postLikeUnlike($post_id);
+
+        return response()->json(['success' => true]);
     }
 
     public function destroy(Post $post): RedirectResponse
