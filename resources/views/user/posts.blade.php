@@ -28,6 +28,13 @@
                     alt="Post Image">
 
                 <span class="text-gray-700 p-2">{{ $post->description }}</span>
+                <span>
+                    @if (count($post->postLike) > 0)
+                        <i class="fas fa-heart"></i>
+                    @else
+                        <i class="far fa-heart"></i>
+                    @endif
+                </span>
 
                 @forelse ($post->comment as $comment)
                     <div class="my-1 flex flex-col justify-center bg-gradient-to-r from-cyan-100 rounded-md p-2">

@@ -21,7 +21,7 @@ class PostRepository implements PostRepositoryInterface
 
     public function getAll()
     {
-        return $this->post::with('user', 'comment', 'comment.user')->orderByDesc('created_at')->get();
+        return $this->post::with('user', 'comment', 'postLike', 'comment.user')->orderByDesc('created_at')->get();
     }
 
     public function find($id)
