@@ -49,8 +49,10 @@ class PostLikeRepository implements PostLikeRepositoryInterface
         $data['post_id'] = $post_id;
 
         $postLike = $this->postLike::where(
-            ['post_id' => $data['post_id']],
-            ['user_id' => $data['user_id']],
+            [
+                'post_id' => $data['post_id'],
+                'user_id' => $data['user_id']
+            ]
         )->get();
 
         if (count($postLike) > 0) {
@@ -64,15 +66,18 @@ class PostLikeRepository implements PostLikeRepositoryInterface
 
     public function getCurrentDayLikes()
     {
+        $loggedInUserId = auth()->id();
+
         $today = Carbon::today();
-        return $this->postLike::whereDate('created_at', $today)->get()->count();
+        return $this->postLike::whereDate('created_at', $today)
+            ->where('user_id', $loggedInUserId)
+            ->get()->count();
     }
 
     public function canLikeToday()
     {
         $currentDayLikes = $this->getCurrentDayLikes();
         $currentDayMaxLikes = $this->settingRepository->getCurrentDayMaxLikes();
-
         if ($currentDayLikes >= $currentDayMaxLikes) {
             return false;
         }

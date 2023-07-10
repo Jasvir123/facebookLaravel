@@ -47,11 +47,11 @@ class SettingRepository implements SettingRepositoryInterface
     }
 
     public function getCurrentDayMaxPosts(){
-        return $this->getCurrentDaySettings()->maxPostsCount;
+        return $this->getCurrentDaySettings()->maxPostsCount ?? INF;
     }
 
     public function getCurrentDayMaxLikes(){
-        return $this->getCurrentDaySettings()->maxLikesCount;
+        return $this->getCurrentDaySettings()->maxLikesCount ?? INF;
     }
 
     public function checkOrCreateForCurrentDay($data)
