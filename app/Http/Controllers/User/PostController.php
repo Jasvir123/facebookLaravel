@@ -12,17 +12,23 @@ use Illuminate\Validation\Rules\File;
 use Illuminate\View\View;
 
 use App\Repositories\PostRepositoryInterface;
+use App\Repositories\CommentRepositoryInterface;
 use App\Repositories\PostLikeRepositoryInterface;
+
 use Illuminate\Http\JsonResponse;
 
 class PostController extends Controller
 {
-    protected $postRepository, $postLikeRepository;
+    protected $postRepository, $postLikeRepository, $commentRepository;
 
-    public function __construct(PostRepositoryInterface $postRepository, PostLikeRepositoryInterface $postLikeRepository)
-    {
+    public function __construct(
+        PostRepositoryInterface $postRepository,
+        PostLikeRepositoryInterface $postLikeRepository,
+        CommentRepositoryInterface $commentRepository
+    ) {
         $this->postRepository = $postRepository;
         $this->postLikeRepository = $postLikeRepository;
+        $this->commentRepository = $commentRepository;
     }
 
     /**
@@ -59,16 +65,12 @@ class PostController extends Controller
 
     public function storeComment(Request $request): RedirectResponse
     {
-        $request->validate([
+        $data = $request->validate([
             'post_id' => ['required', 'integer'],
             'comment' => ['required', 'string', 'max:4000']
         ]);
 
-        Comment::create([
-            'user_id' => $request->user()->id,
-            'post_id' => $request->post_id,
-            'comment' => $request->comment
-        ]);
+        $this->commentRepository->create($data);
 
         return Redirect::to('posts');
     }

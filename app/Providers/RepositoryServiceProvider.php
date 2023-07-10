@@ -16,6 +16,9 @@ use App\Repositories\PostLikeRepositoryInterface;
 use App\Repositories\SettingRepository;
 use App\Repositories\SettingRepositoryInterface;
 
+use App\Repositories\CommentRepository;
+use App\Repositories\CommentRepositoryInterface;
+
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -27,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(PostLikeRepositoryInterface::class, PostLikeRepository::class);
         $this->app->bind(SettingRepositoryInterface::class, SettingRepository::class);
+        $this->app->bind(CommentRepositoryInterface::class, CommentRepository::class);
     }
 
     /**
