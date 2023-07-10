@@ -38,6 +38,7 @@ class Post extends Model
 
         static::deleting(function ($post) {
             $post->comment()->delete();
+            $post->postLike()->delete();
         });
     }
 }
