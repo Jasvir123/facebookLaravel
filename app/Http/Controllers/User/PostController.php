@@ -54,10 +54,10 @@ class PostController extends Controller
 
 
         if (!$this->postRepository->canPostToday()) {
-            $message = 'Could not create post. You have created maximum posts for today.';
+            $message = __('messages.maxPostsCreated');
         } else {
             $this->postRepository->create($data);
-            $message = 'Post created successfully.';
+            $message = __('messages.postCreated');
         }
 
         return Redirect::to('posts')->with('success', $message);
@@ -72,7 +72,7 @@ class PostController extends Controller
 
         $this->commentRepository->create($data);
 
-        return Redirect::to('posts');
+        return Redirect::to('posts')->with('success', __('messages.commentAdded'));
     }
 
     public function index(): View
@@ -98,6 +98,6 @@ class PostController extends Controller
     public function destroy(Post $post): RedirectResponse
     {
         $this->postRepository->delete($post);
-        return Redirect::to('posts')->with('success', 'Post deleted successfully');
+        return Redirect::to('posts')->with('success', __('messages.postDeleted'));
     }
 }

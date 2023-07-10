@@ -4,7 +4,11 @@
             {{ __('Users') }}
         </h2>
     </x-slot>
-
+    @if (session('success'))
+        <p>
+            {{ session('success') }}
+        </p>
+    @endif
     <x-card>
 
         <div class="bg-white shadow overflow-hidden sm:rounded-lg">

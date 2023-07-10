@@ -46,7 +46,7 @@ class AdminController extends Controller
     {
         $this->userRepository->userIsActiveToggle($user);
 
-        return Redirect::to('admin/showUsers')->with('success', 'User status toggled successfully.');
+        return Redirect::to('admin/showUsers')->with('success', __('messages.userIsActiveToggled'));
     }
 
     public function settings(): View
@@ -63,6 +63,6 @@ class AdminController extends Controller
         ]);
 
         $this->settingRepository->checkOrCreateForCurrentDay($data);
-        return Redirect::to('admin/settings')->with('success', 'Settings updated successfully');
+        return Redirect::to('admin/settings')->with('success', __('messages.settingsUpdated'));
     }
 }
