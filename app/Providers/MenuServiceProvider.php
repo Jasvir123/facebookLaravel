@@ -23,15 +23,20 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $menus = [
+        $adminMenus = [
             'Dashboard' => 'admin.dashboard',
             'Users' => 'admin.showUsers',
             'Posts' => 'posts',
             'Settings' => 'admin.settings'
         ];
 
-        View::composer('layouts.app', function ($view) use ($menus) {
-            $view->with('menus', $menus);
+        $userMenus = [
+            'News Feed' => 'posts',
+            'Create Post' => 'createPost'
+        ];
+
+        View::composer('layouts.app', function ($view) use ($adminMenus, $userMenus) {
+            $view->with(['adminMenus' => $adminMenus, 'userMenus' => $userMenus]);
         });
     }
 }
