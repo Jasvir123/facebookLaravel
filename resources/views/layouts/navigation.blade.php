@@ -12,23 +12,12 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    @role('admin')
-                        @forelse ($adminMenus as $menuName => $menuLink)
+                        @forelse ($menus as $menuName => $menuLink)
                             <x-nav-link :href="route($menuLink)" :active="request()->routeIs($menuLink)">
                                 {{ __($menuName) }}
                             </x-nav-link>
                         @empty
                         @endforelse
-                    @endrole
-
-                    @role('user')
-                        @forelse ($userMenus as $menuName => $menuLink)
-                            <x-nav-link :href="route($menuLink)" :active="request()->routeIs($menuLink)">
-                                {{ __($menuName) }}
-                            </x-nav-link>
-                        @empty
-                        @endforelse
-                    @endrole
                 </div>
             </div>
 
@@ -89,23 +78,12 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            @role('admin')
-                @forelse ($adminMenus as $menuName => $menuLink)
+                @forelse ($menus as $menuName => $menuLink)
                     <x-responsive-nav-link :href="route($menuLink)" :active="request()->routeIs($menuLink)">
                         {{ __($menuName) }}
                     </x-responsive-nav-link>
                 @empty
                 @endforelse
-            @endrole
-
-            @role('user')
-                @forelse ($userMenus as $menuName => $menuLink)
-                    <x-responsive-nav-link :href="route($menuLink)" :active="request()->routeIs($menuLink)">
-                        {{ __($menuName) }}
-                    </x-responsive-nav-link>
-                @empty
-                @endforelse
-            @endrole
         </div>
 
         <!-- Responsive Settings Options -->

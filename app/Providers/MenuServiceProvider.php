@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use App\Http\View\Composers\MenuComposer;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -23,20 +22,6 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $adminMenus = [
-            'Dashboard' => 'admin.dashboard',
-            'Users' => 'admin.showUsers',
-            'Posts' => 'posts',
-            'Settings' => 'admin.settings'
-        ];
-
-        $userMenus = [
-            'News Feed' => 'posts',
-            'Create Post' => 'createPost'
-        ];
-
-        View::composer('layouts.app', function ($view) use ($adminMenus, $userMenus) {
-            $view->with(['adminMenus' => $adminMenus, 'userMenus' => $userMenus]);
-        });
+        View::composer(['layouts.app'], MenuComposer::class);
     }
 }
