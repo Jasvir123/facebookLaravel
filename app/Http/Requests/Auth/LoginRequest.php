@@ -67,7 +67,7 @@ class LoginRequest extends FormRequest
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
-            $duration = $duration = date('H:i:s', $seconds);
+            $duration = gmdate('H:i:s', $seconds);
             throw ValidationException::withMessages([
                 'email' => [trans("Too many login attempts. Please try again in $duration.")],
             ]);
