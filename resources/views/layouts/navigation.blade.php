@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('admin.dashboard') }}">
+                    <a href="/">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
@@ -13,9 +13,12 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     @role('admin')
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                        @forelse ($menus as $menuName => $menuLink)
+                            <x-nav-link :href="route($menuLink)" :active="request()->routeIs($menuLink)">
+                                {{ __($menuName) }}
+                            </x-nav-link>
+                        @empty
+                        @endforelse
                     @endrole
                 </div>
             </div>
@@ -70,9 +73,12 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             @role('admin')
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+                @forelse ($menus as $menuName => $menuLink)
+                    <x-responsive-nav-link :href="route($menuLink)" :active="request()->routeIs($menuLink)">
+                        {{ __($menuName) }}
+                    </x-responsive-nav-link>
+                @empty
+                @endforelse
             @endrole
         </div>
 
