@@ -12,7 +12,7 @@ class PostRepository implements PostRepositoryInterface
 {
     use FileStorageTrait;
 
-    const STORE_POST_IMAGE_PATH = "public/post/images";
+    const STORE_POST_IMAGE_PATH = "public/post/images/";
 
     protected $post, $settingRepository;
 

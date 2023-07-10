@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Repositories\PostRepository;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -39,6 +41,13 @@ class Post extends Model
         static::deleting(function ($post) {
             $post->comment()->delete();
             $post->postLike()->delete();
+
+            // Delete the post media
+            $mediaPath = $post->media;
+            if ($mediaPath) {
+                $filename = basename($mediaPath);
+                Storage::delete(PostRepository::STORE_POST_IMAGE_PATH . $filename);
+            }
         });
     }
 }
