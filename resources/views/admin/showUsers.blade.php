@@ -11,7 +11,7 @@
     @endif
     <x-card>
 
-        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
@@ -73,6 +73,7 @@
                 </tbody>
             </table>
         </div>
+        {{ $users->links() }}
     </x-card>
 
 

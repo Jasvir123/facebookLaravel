@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Traits\FileStorageTrait;
+use Illuminate\Support\Facades\Config;
 use Spatie\Permission\Models\Role;
 
 class UserRepository implements UserRepositoryInterface
@@ -21,7 +22,8 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAll()
     {
-        return Role::where('name', 'user')->first()->users()->get();
+        $paginationLimit = Config::get('pagination.limit');
+        return Role::where('name', 'user')->first()->users()->orderByDesc('created_at')->paginate($paginationLimit);
     }
 
     public function find($id)
