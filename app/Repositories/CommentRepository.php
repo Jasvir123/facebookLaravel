@@ -15,12 +15,17 @@ class CommentRepository implements CommentRepositoryInterface
 
     public function getAll()
     {
-        return $this->comment::get();
+        return $this->comment::with('user')->get();
     }
 
     public function find($id)
     {
-        return $this->comment->find($id);
+        return $this->comment->with('user')->find($id);
+    }
+
+    public function findCommentsByPostId($post_id)
+    {
+        return $this->comment->with('user')->where('post_id', $post_id)->get();
     }
 
     public function create($data)
