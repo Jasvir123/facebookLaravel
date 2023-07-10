@@ -3,6 +3,9 @@
         <link href="{{ asset('css/posts.css') }}" rel="stylesheet">
     @endpush
     <div class="container mx-auto max-w-2xl">
+
+        {{ $posts->links() }}
+
         @if (session('success'))
             <p>
                 {{ session('success') }}
@@ -76,7 +79,7 @@
                     No posts found.
                 </p>
             @endforelse
-
+            {{ $posts->links() }}
         </div>
 
         @push('scripts')

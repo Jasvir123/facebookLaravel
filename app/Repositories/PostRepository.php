@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Traits\FileStorageTrait;
 use Carbon\Carbon;
 use App\Repositories\SettingRepositoryInterface;
+use Illuminate\Support\Facades\Config;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -25,7 +26,7 @@ class PostRepository implements PostRepositoryInterface
     public function getAll()
     {
         $loggedInUserId = auth()->id();
-
+        $paginationLimit = Config::get('pagination.limit');
         return $this->post::with([
             'user',
             'comment',
@@ -33,7 +34,7 @@ class PostRepository implements PostRepositoryInterface
                 $query->where('user_id', $loggedInUserId);
             },
             'comment.user'
-        ])->orderByDesc('created_at')->get();
+        ])->orderByDesc('created_at')->paginate($paginationLimit);
     }
 
     public function find($id)
