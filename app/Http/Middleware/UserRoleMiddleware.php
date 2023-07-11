@@ -19,7 +19,6 @@ class UserRoleMiddleware
     {
         $user = Auth::user();
 
-        // dd($user->hasAnyRole($roles));
         if ($user && $user->hasAnyRole(['user','admin'])) {
             return $next($request);
         }

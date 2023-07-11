@@ -21,9 +21,6 @@ class AdminRoleMiddleware
     {
         $user = Auth::user();
         
-        $roles = Role::get();
-
-        // dd($user->hasAnyRole($roles));
         if ($user && $user->hasAnyRole(['admin'])) {
             return $next($request);
         }
