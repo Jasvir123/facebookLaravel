@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Traits\FileStorageTrait;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Spatie\Permission\Models\Role;
 
@@ -24,10 +25,26 @@ class UserRepository implements UserRepositoryInterface
         return Role::where('name', 'user')->first()->users();
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
         $paginationLimit = Config::get('pagination.limit');
-        return $this->getUsersWithRoleUser()->orderByDesc('created_at')->paginate($paginationLimit);
+        $query = $this->getUsersWithRoleUser()->orderByDesc('created_at');
+
+        $searchName = $request->input('searchName');
+        $searchEmail = $request->input('searchEmail');
+
+        if ($searchName) {
+            $query->where(function($query) use($searchName){
+                $query->where('name','like',"%$searchName%");
+                $query->orWhere('lastName','like',"%$searchName%");
+            });
+        }
+
+        if ($searchEmail) {
+            $query->where('email','like',"%$searchEmail%");
+        }
+
+        return $query->paginate($paginationLimit);
     }
 
     public function find($id)

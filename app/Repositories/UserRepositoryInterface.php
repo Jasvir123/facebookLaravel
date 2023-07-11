@@ -2,9 +2,11 @@
 
 namespace App\Repositories;
 
+use Illuminate\Http\Request;
+
 interface UserRepositoryInterface
 {
-    public function getAll();
+    public function getAll(Request $request);
 
     public function find($id);
 

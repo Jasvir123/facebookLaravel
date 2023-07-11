@@ -10,6 +10,16 @@
         </p>
     @endif
     <x-card>
+        <form action="{{ route('admin.showUsers') }}" method="get">
+            <div class="flex items-center gap-10 px-6 py-3 bg-gray-100">
+                <x-admin-text-input type="text" name="searchName" value="{{ $request->searchName }}" placeholder="Search by Name" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"/>
+                <x-admin-text-input type="text" name="searchEmail" value="{{ $request->searchEmail }}" placeholder="Search by Email" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"/>
+                
+              </div>
+              <div class="flex items-center justify-between px-6 py-3 bg-gray-100">
+                <button type="submit" class="px-4 py-2 text-sm font-medium leading-5 text-white bg-teal-700 rounded-lg hover:bg-teal-600 focus:outline-none focus:shadow-outline-teal">Search</button>
+              </div>
+        </form>
 
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
             <table class="min-w-full divide-y divide-gray-200">
@@ -40,7 +50,7 @@
                     @foreach ($users as $user)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                {{ $user->name }}
+                                {{ $user->fullName }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 {{ $user->email }}

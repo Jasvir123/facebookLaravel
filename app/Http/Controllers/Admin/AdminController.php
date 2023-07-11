@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Sanitizer;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -36,10 +37,16 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('userCount', 'postsCount', 'activeUserCount'));
     }
 
-    public function showUsers(): View
+    public function showUsers(Request $request): View
     {
-        $users = $this->userRepository->getAll();
-        return view('admin.showUsers', compact('users'));
+        $request->merge([
+            'searchName' => Sanitizer::sanitizeInput($request->searchName),
+            'searchEmail' => Sanitizer::sanitizeInput($request->searchEmail)
+        ]);
+
+        $users = $this->userRepository->getAll($request);
+        
+        return view('admin.showUsers', compact('users','request'));
     }
 
     public function userToggle(User $user)
