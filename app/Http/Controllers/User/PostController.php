@@ -73,9 +73,9 @@ class PostController extends Controller
         return Redirect::to('posts')->with('success', __('messages.commentAdded'));
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $posts = $this->postRepository->getAll();
+        $posts = $this->postRepository->getAll($request);
         return view('user.posts', compact('posts'));
     }
 
