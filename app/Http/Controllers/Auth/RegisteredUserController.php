@@ -50,7 +50,7 @@ class RegisteredUserController extends Controller
                 ->max(12 * 1024),],
             'gender' => ['required','string','max:20'],
             'address' => 'required|string|max:500',
-            'contactNo' => 'required|string|min:10|max:10',
+            'contactNo' => 'required|string|min:7|max:20',
         ]);
 
         $user = $this->userRepository->create($data);
