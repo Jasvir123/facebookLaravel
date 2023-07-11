@@ -12,8 +12,8 @@
     <x-card>
         <form action="{{ route('admin.posts') }}" method="get">
             <div class="flex items-center gap-10 px-6 py-3 bg-gray-100">
-                <input type="text" name="searchUser" value="{{ $request->searchUser }}" placeholder="Search by User" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
-                <input type="text" name="searchDescription" value="{{ $request->searchDescription }}" placeholder="Search by Description" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
+                <x-admin-text-input type="text" name="searchUser" value="{{ $request->searchUser }}" placeholder="Search by User" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"/>
+                <x-admin-text-input type="text" name="searchDescription" value="{{ $request->searchDescription }}" placeholder="Search by Description" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"/>
                 
               </div>
               <div class="flex items-center justify-between px-6 py-3 bg-gray-100">
