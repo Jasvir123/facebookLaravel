@@ -6,11 +6,12 @@ use App\Repositories\PostRepository;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -42,12 +43,24 @@ class Post extends Model
             $post->comment()->delete();
             $post->postLike()->delete();
 
-            // Delete the post media
-            $mediaPath = $post->media;
-            if ($mediaPath) {
-                $filename = basename($mediaPath);
-                Storage::delete(PostRepository::STORE_POST_IMAGE_PATH . $filename);
-            }
+            // // Delete the post media
+            // $mediaPath = $post->media;
+            // if ($mediaPath) {
+            //     $filename = basename($mediaPath);
+            //     Storage::delete(PostRepository::STORE_POST_IMAGE_PATH . $filename);
+            // }
         });
+    }
+    
+    public function restore()
+    {
+        // Restore the Post model
+        parent::restore();
+
+        // Restore related Comment models
+        $this->comment()->withTrashed()->restore();
+
+        // Restore related PostLike models
+        $this->postLike()->withTrashed()->restore();
     }
 }
