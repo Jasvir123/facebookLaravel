@@ -1,8 +1,10 @@
 <div>
     <!-- Button to open the modal -->
-    <x-primary-button wire:click="openModal" class="flex mt-3 ml-4 self-end">
-        {{ __('Show Comments') }}
-    </x-primary-button>
+    
+    <button wire:click="openModal" type="submit"
+    class="px-4 py-2 text-sm font-medium leading-5 text-white bg-teal-700 rounded-lg hover:bg-teal-600 focus:outline-none focus:shadow-outline-teal">
+        Show Comments
+    </button>
 
     <!-- Modal -->
     @if ($isOpen)
