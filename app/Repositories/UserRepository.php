@@ -20,10 +20,14 @@ class UserRepository implements UserRepositoryInterface
         $this->user = $user;
     }
 
+    public function getUsersWithRoleUser() {
+        return Role::where('name', 'user')->first()->users();
+    }
+
     public function getAll()
     {
         $paginationLimit = Config::get('pagination.limit');
-        return Role::where('name', 'user')->first()->users()->orderByDesc('created_at')->paginate($paginationLimit);
+        return $this->getUsersWithRoleUser()->orderByDesc('created_at')->paginate($paginationLimit);
     }
 
     public function find($id)
@@ -57,13 +61,12 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAllCount()
     {
-        return $this->getAll()->count();
+        return $this->getUsersWithRoleUser()->get()->count();
     }
 
     public function getAllActiveCount()
     {
-        return Role::where('name', 'user')->first()
-            ->users()->where('isActive', '1')->count();
+        return $this->getUsersWithRoleUser()->where('isActive', '1')->count();
     }
 
     public function userIsActiveToggle(User $user)

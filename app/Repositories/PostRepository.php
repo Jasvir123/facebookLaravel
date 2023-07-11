@@ -63,7 +63,7 @@ class PostRepository implements PostRepositoryInterface
 
     public function getAllCount()
     {
-        return $this->getAll()->count();
+        return $this->post::get()->count();
     }
 
     public function getCurrentDayPosts()
