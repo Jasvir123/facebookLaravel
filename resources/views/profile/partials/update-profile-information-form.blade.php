@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
@@ -21,6 +21,22 @@
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
+        </div>
+
+        <!-- Last Name -->
+        <div class="mt-4">
+            <x-input-label for="lastName" :value="__('Last Name')" />
+            <x-text-input id="lastName" class="block mt-1 w-full" type="text" name="lastName" :value="old('lastName', $user->lastName)"
+                required autofocus autocomplete="last name" />
+            <x-input-error :messages="$errors->get('lastName')" class="mt-2" />
+        </div>
+
+        <!-- Gender -->
+        <div class="mt-4">
+            <x-input-label for="gender" :value="__('Gender')" />
+            <x-text-input id="gender" class="block mt-1 w-full" type="text" name="gender" :value="old('gender', $user->gender)"
+                required autofocus autocomplete="last name" />
+            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
         </div>
 
         <div>
@@ -45,6 +61,40 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="mt-4">
+            <x-input-label for="dob" :value="__('Date of Birth')" />
+            <x-text-input id="dob" class="block mt-1 w-full" type="date" name="dob" :value="old('dob', $user->dob)"
+                required autofocus autocomplete="last name" />
+            <x-input-error :messages="$errors->get('dob')" class="mt-2" />
+        </div>
+
+        <!-- Profile Image -->
+        <div class="mt-4">
+            <x-input-label for="profileImage" :value="__('Profile Image')" />
+            <x-text-input id="profileImage" class="block mt-1 w-full" type="file" name="profileImage"
+                :value="old('profileImage', $user->profileImage)" required autofocus autocomplete="profile image" />
+            <x-input-error :messages="$errors->get('profileImage')" class="mt-2" />
+        </div>
+
+        <!-- Address -->
+        <div class="mt-4">
+            <x-input-label for="address" :value="__('Address')" />
+            <x-textarea id="address" class="block mt-1 w-full" name="address" required autofocus
+                autocomplete="address">
+                {{ old('address', $user->address) }}
+            </x-textarea>
+            <x-input-error :messages="$errors->get('address')" class="mt-2" />
+        </div>
+
+        <!-- Contact Number -->
+        <div class="mt-4">
+            <x-input-label for="contactNo" :value="__('Contact Number')" />
+            <x-text-input id="contactNo" class="block mt-1 w-full" type="tel" name="contactNo" :value="old('contactNo', $user->contactNo)" required autofocus
+                autocomplete="contact number" />
+            <x-input-error :messages="$errors->get('contactNo')" class="mt-2" />
         </div>
 
         <div class="flex items-center gap-4">

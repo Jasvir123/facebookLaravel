@@ -73,8 +73,10 @@
         <!-- Address -->
         <div class="mt-4">
             <x-input-label for="address" :value="__('Address')" />
-            <x-textarea id="address" class="block mt-1 w-full" name="address" :value="old('address')" required autofocus
-                autocomplete="address" />
+            <x-textarea id="address" class="block mt-1 w-full" name="address" required autofocus
+                autocomplete="address">
+                {{ old('address') }}
+            </x-textarea>
             <x-input-error :messages="$errors->get('address')" class="mt-2" />
         </div>
 
