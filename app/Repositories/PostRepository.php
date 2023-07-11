@@ -88,7 +88,9 @@ class PostRepository implements PostRepositoryInterface
     public function getCurrentDayPosts()
     {
         $today = Carbon::today();
-        return $this->post::whereDate('created_at', $today)->get()->count();
+        return $this->post::whereDate('created_at', $today)
+        ->where('user_id', auth()->id())
+        ->get()->count();
     }
 
     public function canPostToday()
