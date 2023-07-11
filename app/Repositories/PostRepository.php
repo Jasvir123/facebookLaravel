@@ -44,8 +44,8 @@ class PostRepository implements PostRepositoryInterface
         
         if ($searchUser) {
             $query->whereHas('user', function ($query) use ($searchUser) {
-                $query->where('name', 'like', "%{$searchUser}%")
-                      ->orWhere('lastName', 'like', "%{$searchUser}%");
+                $query->where('name', 'like', "%$searchUser%")
+                      ->orWhere('lastName', 'like', "%$searchUser%");
             });
         }
         
