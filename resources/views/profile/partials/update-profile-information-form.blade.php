@@ -66,7 +66,7 @@
         <!-- Date of Birth -->
         <div class="mt-4">
             <x-input-label for="dob" :value="__('Date of Birth')" />
-            <x-text-input id="dob" class="block mt-1 w-full" type="date" name="dob" :value="old('dob', $user->dob)"
+            <x-text-input id="dob" class="block mt-1 w-full" type="date" name="dob" :value="old('dob', date('Y-m-d', strtotime($user->dob)))"
                 required autofocus autocomplete="last name" />
             <x-input-error :messages="$errors->get('dob')" class="mt-2" />
         </div>
