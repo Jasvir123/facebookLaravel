@@ -29,6 +29,12 @@ class PostController extends Controller
         $this->commentRepository = $commentRepository;
     }
 
+    public function index(Request $request): View
+    {
+        $posts = $this->postRepository->getAll($request);
+        return view('user.posts', compact('posts'));
+    }
+
     /**
      * Display the createPost view.
      */
@@ -71,12 +77,6 @@ class PostController extends Controller
         $this->commentRepository->create($data);
 
         return Redirect::to('posts')->with('success', __('messages.commentAdded'));
-    }
-
-    public function index(Request $request): View
-    {
-        $posts = $this->postRepository->getAll($request);
-        return view('user.posts', compact('posts'));
     }
 
     public function postLike($post_id): JsonResponse
