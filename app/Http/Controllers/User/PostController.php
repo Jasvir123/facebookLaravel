@@ -88,7 +88,7 @@ class PostController extends Controller
             $messageJson = ['success' => true];
             $httpStatusCode = 200;
         } else {
-            $messageJson = ['message' => 'Could not like post. You have liked maximum posts for today'];
+            $messageJson = ['message' => __('messages.postNotLiked')];
             $httpStatusCode = 403;
         }
 

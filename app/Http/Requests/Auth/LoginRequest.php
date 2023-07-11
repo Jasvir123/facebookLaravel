@@ -69,7 +69,7 @@ class LoginRequest extends FormRequest
 
             $duration = gmdate('H:i:s', $seconds);
             throw ValidationException::withMessages([
-                'email' => [trans("Too many login attempts. Please try again in $duration.")],
+                'email' => [__("messages.userTimedout", ["duration" => $duration])],
             ]);
     }
 
