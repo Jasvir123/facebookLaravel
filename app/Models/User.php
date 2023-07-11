@@ -69,4 +69,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PostLike::class);
     }
+    
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['name'] . ' ' . $this->attributes['lastName'];
+    }
 }
