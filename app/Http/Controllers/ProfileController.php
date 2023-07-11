@@ -19,6 +19,13 @@ class ProfileController extends Controller
         $this->userRepository = $userRepository;
     }
 
+    public function index(): View {
+        $userId = auth()->id();
+        $user = $this->userRepository->find($userId);
+        
+        return view('profile.view', compact('user'));
+    }
+
     /**
      * Display the user's profile form.
      */
