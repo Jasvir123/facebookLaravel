@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Traits\FileStorageTrait;
 use Carbon\Carbon;
 use App\Repositories\SettingRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
 class PostRepository implements PostRepositoryInterface
@@ -23,18 +24,36 @@ class PostRepository implements PostRepositoryInterface
         $this->settingRepository = $settingRepository;
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
         $loggedInUserId = auth()->id();
         $paginationLimit = Config::get('pagination.limit');
-        return $this->post::with([
+
+        $searchUser = $request->input('searchUser');
+        $searchDescription = $request->input('searchDescription');
+
+        $query = $this->post::with([
             'user',
             'comment',
             'postLike' => function ($query) use ($loggedInUserId) {
                 $query->where('user_id', $loggedInUserId);
             },
             'comment.user'
-        ])->orderByDesc('created_at')->paginate($paginationLimit);
+        ])->orderByDesc('created_at');
+
+        
+        if ($searchUser) {
+            $query->whereHas('user', function ($query) use ($searchUser) {
+                $query->where('name', 'like', "%{$searchUser}%")
+                      ->orWhere('lastName', 'like', "%{$searchUser}%");
+            });
+        }
+        
+        if ($searchDescription) {
+            $query->where('description', 'like', "%{$searchDescription}%");
+        }
+        
+        return $query->paginate($paginationLimit);
     }
 
     public function find($id)

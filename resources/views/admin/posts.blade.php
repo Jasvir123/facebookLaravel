@@ -10,6 +10,16 @@
     @endif
 
     <x-card>
+        <form action="{{ route('admin.posts') }}" method="get">
+            <div class="flex items-center gap-10 px-6 py-3 bg-gray-100">
+                <input type="text" name="searchUser" value="{{ $request->searchUser }}" placeholder="Search by User" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
+                <input type="text" name="searchDescription" value="{{ $request->searchDescription }}" placeholder="Search by Description" class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
+                
+              </div>
+              <div class="flex items-center justify-between px-6 py-3 bg-gray-100">
+                <button type="submit" class="px-4 py-2 text-sm font-medium leading-5 text-white bg-teal-700 rounded-lg hover:bg-teal-600 focus:outline-none focus:shadow-outline-teal">Search</button>
+              </div>
+        </form>
 
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
             <table class="min-w-full divide-y divide-gray-200">

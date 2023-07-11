@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Sanitizer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -20,10 +21,15 @@ class AdminPostController extends Controller
         $this->postRepository = $postRepository;
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $posts = $this->postRepository->getAll();
-        return view('admin.posts', compact('posts'));
+        $request->merge([
+            'searchUser' => Sanitizer::sanitizeInput($request->input('searchUser')),
+            'searchDescription' => Sanitizer::sanitizeInput($request->input('searchDescription')),
+        ]);
+
+        $posts = $this->postRepository->getAll($request);
+        return view('admin.posts', compact('posts','request'));
     }
 
     public function destroy(Post $post): RedirectResponse
