@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Comment;
-use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -93,11 +91,5 @@ class PostController extends Controller
         }
 
         return response()->json($messageJson, $httpStatusCode);
-    }
-
-    public function destroy(Post $post): RedirectResponse
-    {
-        $this->postRepository->delete($post);
-        return Redirect::to('posts')->with('success', __('messages.postDeleted'));
     }
 }

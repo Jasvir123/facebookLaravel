@@ -18,7 +18,7 @@ class MenuComposer
             $menus = [
                 'Dashboard' => 'admin.dashboard',
                 'Users' => 'admin.showUsers',
-                'Posts' => 'posts',
+                'Posts' => 'admin.posts',
                 'Settings' => 'admin.settings'
             ];
         }

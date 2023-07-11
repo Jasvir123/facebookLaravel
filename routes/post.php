@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\User\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('admin')->group(function () {
-    Route::delete('posts/{post}/delete', [PostController::class, 'destroy'])->name('posts.destroy');
-
+    Route::delete('posts/{post}/delete', [AdminPostController::class, 'destroy'])->name('posts.destroy');
+    Route::get('admin/posts', [AdminPostController::class, 'index'])->name('admin.posts');
 });

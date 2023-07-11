@@ -18,15 +18,6 @@
 
                 <div class="post-header flex items-center justify-between mb-2">
                     <span class="text-black font-bold">{{ $post->user->name }}</span>
-                    @role('admin')
-                        <form action="{{ route('posts.destroy', $post) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <x-primary-button onclick="return confirm('Are you sure?')">
-                                {{ __('Delete Post') }}
-                            </x-primary-button>
-                        </form>
-                    @endrole
                 </div>
 
 
@@ -44,14 +35,8 @@
                         @endif
                         <span class="loader"></span>
                     </button>
-                    @role('admin')
-                        @if (count($post->comment) > 0)
-                            @livewire('modal-component', ['post_id' => $post->id])
-                        @endif
-                    @endrole
                 </div>
 
-                @role('user')
                     @forelse ($post->comment as $comment)
                         <div class="my-1 flex flex-col justify-center bg-gradient-to-r from-cyan-100 rounded-md p-2">
                             <span class="text-xs">{{ $comment->user->name }}</span>
@@ -72,7 +57,6 @@
                             {{ __('Add Comment') }}
                         </x-primary-button>
                     </form>
-                @endrole
             </div>
             @empty
                 <p>
