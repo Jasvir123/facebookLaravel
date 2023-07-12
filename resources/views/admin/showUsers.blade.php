@@ -42,11 +42,11 @@
                             @endphp
 
                             @if($request->sortUser == 'desc')
-                                <a href="?sortUser=asc">
+                                <a href="{{ route('admin.showUsers', ['sortUser' => 'asc']) }}">
                                     <i class="fas fa-sort-amount-up {{ $userSortClasses }}"></i>
                                 </a>
                             @else
-                                <a href="?sortUser=desc">
+                                <a href="{{ route('admin.showUsers', ['sortUser' => 'desc']) }}">
                                     <i class="fas fa-sort-amount-down {{ $userSortClasses }}"></i>
                                 </a>
                             @endif
@@ -63,11 +63,11 @@
                             @endphp
 
                             @if($request->sortEmail == 'desc')
-                                <a href="?sortEmail=asc">
+                                <a href="{{ route('admin.showUsers', ['sortEmail' => 'asc']) }}">
                                     <i class="fas fa-sort-amount-up {{ $emailSortClasses }}"></i>
                                 </a>
                             @else
-                                <a href="?sortEmail=desc">
+                                <a href="{{ route('admin.showUsers', ['sortEmail' => 'desc']) }}">
                                     <i class="fas fa-sort-amount-down {{ $emailSortClasses }}"></i>
                                 </a>
                             @endif
