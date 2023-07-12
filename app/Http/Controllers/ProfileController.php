@@ -57,7 +57,7 @@ class ProfileController extends Controller
             ],
             'gender' => ['string', 'max:20'],
             'address' => 'string|max:500',
-            'contactNo' => 'integer|min:10|max:10'
+            'contactNo' => 'digits:10'
         ],[
             'profileImage.max' => 'The profile image size must not exceed 4 MB.',
             'profileImage.min' => 'The profile image must have a minimum size of 10 KB.',

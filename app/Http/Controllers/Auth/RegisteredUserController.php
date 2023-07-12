@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
             'dob' => ['required', 'date', 'before:' . now()->subYears(13)->format('Y-m-d')],
             'gender' => ['required', 'string', 'max:20'],
             'address' => 'required|string|max:500',
-            'contactNo' => 'required|integer|min:10|max:10',
+            'contactNo' => 'required|digits:10',
             'profileImage' => [
                 'file' => 'min:10', 'max:4096', 'mimes:jpg,jpeg,png',
             ],
@@ -57,7 +57,6 @@ class RegisteredUserController extends Controller
             'profileImage.max' => 'The profile image size must not exceed 4 MB.',
             'profileImage.min' => 'The profile image must have a minimum size of 10 KB.',
         ]);
-
         $user = $this->userRepository->create($data);
 
         event(new Registered($user));
