@@ -11,7 +11,16 @@
 
 
         <div class="bg-white rounded-md m-6 p-6 w-1/2 flex flex-col justify-center items-center">
-            <img class="rounded-full overflow-hidden h-60 w-60 object-cover" src="{{ !empty($user->profileImage) ? Storage::url($user->profileImage) : '' }}" alt="profile image">
+            @if (!empty($user->profileImage))
+                <img class="rounded-full overflow-hidden h-60 w-60 object-cover"
+                    src="{{ Storage::url($user->profileImage) }}" alt="profile image">
+            @else
+                <p>No Image found. Edit Profile to add profile image.</p>
+                <x-primary-button type="button" class="ml-3">
+                    <a href="/profile#profileImage">Edit Profile</a>
+                </x-primary-button>
+            @endif
+
             <span class="text-gray-500 mt-2 text-lg">
                 {{ $user->fullName }}
             </span>
@@ -27,7 +36,8 @@
                     </tr>
                     <tr>
                         <th class="py-2 px-4 border-b border-gray-300">DOB</th>
-                        <td class="py-2 px-4 border-b border-gray-300 text-gray-500">{{ date(Config::get('dateTimeFormat.date'),strtotime($user->dob)) }}</td>
+                        <td class="py-2 px-4 border-b border-gray-300 text-gray-500">
+                            {{ date(Config::get('dateTimeFormat.date'), strtotime($user->dob)) }}</td>
                     </tr>
                     <tr>
                         <th class="py-2 px-4 border-b border-gray-300">Contact No</th>
