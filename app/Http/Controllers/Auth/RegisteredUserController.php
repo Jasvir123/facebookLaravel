@@ -15,6 +15,7 @@ use Illuminate\Validation\Rules\File;
 use Illuminate\View\View;
 
 use App\Repositories\UserRepositoryInterface;
+use Illuminate\Support\Facades\Config;
 
 class RegisteredUserController extends Controller
 {
@@ -29,7 +30,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $gender = Config::get('gender');
+        return view('auth.register', compact('gender'));
     }
 
     /**

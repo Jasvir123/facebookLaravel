@@ -7,6 +7,7 @@ use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -31,8 +32,11 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $gender = Config::get('gender');
+        
         return view('profile.edit', [
             'user' => $request->user(),
+            'gender' => $gender
         ]);
     }
 
