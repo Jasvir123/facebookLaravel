@@ -25,7 +25,7 @@
             </div>
 
             <!-- Visibility -->
-            <div class="mt-4">
+            {{-- <div class="mt-4">
                 <x-input-label for="visibility" :value="__('Visibility')" />
 
                 <select id="visibility" name="visibility" :value="old('visibility')" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
@@ -34,7 +34,7 @@
                     <option value='1'>Only my friends</option>
                 </select>
                 <x-input-error :messages="$errors->get('visibility')" class="mt-2" />
-            </div>
+            </div> --}}
 
             <div class="flex items-center justify-center mt-4">
 

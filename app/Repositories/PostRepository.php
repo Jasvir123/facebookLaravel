@@ -67,6 +67,8 @@ class PostRepository implements PostRepositoryInterface
         if (isset($data['media'])) {
             $data['media'] = $this->getStorePathFromFile($data['media'], self::STORE_POST_IMAGE_PATH);
         }
+        
+        $data['visibility'] = 0;
 
         return $this->post->create($data);
     }
