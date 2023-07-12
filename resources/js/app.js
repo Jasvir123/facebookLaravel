@@ -9,5 +9,7 @@ Alpine.start();
 // set input type number to zero on page load
 document.addEventListener('DOMContentLoaded', function() {
     let numberInput = document.querySelector('input[type="number"]');
-    numberInput.value = ""; // Set empty value
+    if(numberInput.value == 0) {
+        numberInput.value = "";  // Set empty value
+    };
   });
