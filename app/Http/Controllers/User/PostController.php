@@ -10,23 +10,22 @@ use Illuminate\Validation\Rules\File;
 use Illuminate\View\View;
 
 use App\Repositories\PostRepositoryInterface;
-use App\Repositories\CommentRepositoryInterface;
 use App\Repositories\PostLikeRepositoryInterface;
-
+use App\Services\CommentService;
 use Illuminate\Http\JsonResponse;
 
 class PostController extends Controller
 {
-    protected $postRepository, $postLikeRepository, $commentRepository;
+    protected $postRepository, $postLikeRepository, $commentService;
 
     public function __construct(
         PostRepositoryInterface $postRepository,
         PostLikeRepositoryInterface $postLikeRepository,
-        CommentRepositoryInterface $commentRepository
+        CommentService $commentService
     ) {
         $this->postRepository = $postRepository;
         $this->postLikeRepository = $postLikeRepository;
-        $this->commentRepository = $commentRepository;
+        $this->commentService = $commentService;
     }
 
     public function index(Request $request): View
@@ -76,7 +75,7 @@ class PostController extends Controller
             'comment' => ['required', 'string', 'max:4000']
         ]);
 
-        $this->commentRepository->create($data);
+        $this->commentService->create($data);
 
         return Redirect::to('posts')->with('success', __('messages.commentAdded'));
     }
