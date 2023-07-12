@@ -29,7 +29,7 @@ class UserRepository implements UserRepositoryInterface
     public function getAll(Request $request)
     {
 
-        $orderByArray = [];
+        $orderByArray['created_at'] = 'desc';
 
         if ($request->filled('sortEmail')) {
             if ($request->sortEmail == 'desc') {
