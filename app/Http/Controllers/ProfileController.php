@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Validation\Rule;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -43,9 +45,23 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
-        $data = $request->validated();
+        $data = $request->validate([
+            'name' => ['string', 'max:255'],
+            'email' => ['email', 'max:255', Rule::unique(User::class)->ignore(auth()->user()->id)],
+            'lastName' => ['string', 'max:255'],
+            'dob' => ['date', 'before:' . now()->subYears(13)->format('Y-m-d')],
+            'profileImage' => [
+                'file' => 'min:10', 'max:4096', 'mimes:jpg,jpeg,png',
+            ],
+            'gender' => ['string', 'max:20'],
+            'address' => 'string|max:500',
+            'contactNo' => 'integer|min:10|max:10'
+        ],[
+            'profileImage.max' => 'The profile image size must not exceed 4 MB.',
+            'profileImage.min' => 'The profile image must have a minimum size of 10 KB.',
+        ]);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;

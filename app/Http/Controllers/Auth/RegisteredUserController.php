@@ -21,7 +21,7 @@ class RegisteredUserController extends Controller
 {
     protected $userRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository) 
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -47,12 +47,15 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'dob' => ['required', 'date', 'before:' . now()->subYears(13)->format('Y-m-d')],
-            'profileImage' => [File::types(['jpg', 'png'])
-                ->min(1)
-                ->max(12 * 1024),],
-            'gender' => ['required','string','max:20'],
+            'gender' => ['required', 'string', 'max:20'],
             'address' => 'required|string|max:500',
-            'contactNo' => 'required|integer|min:10|max:10'
+            'contactNo' => 'required|integer|min:10|max:10',
+            'profileImage' => [
+                'file' => 'min:10', 'max:4096', 'mimes:jpg,jpeg,png',
+            ],
+        ], [
+            'profileImage.max' => 'The profile image size must not exceed 4 MB.',
+            'profileImage.min' => 'The profile image must have a minimum size of 10 KB.',
         ]);
 
         $user = $this->userRepository->create($data);

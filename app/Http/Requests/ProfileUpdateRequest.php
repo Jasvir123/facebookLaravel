@@ -21,10 +21,10 @@ class ProfileUpdateRequest extends FormRequest
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'lastName' => ['string', 'max:255'],
             'dob' => ['date', 'before:' . now()->subYears(13)->format('Y-m-d')],
-            'profileImage' => [File::types(['jpg', 'png'])
-                ->min(1)
-                ->max(12 * 1024),],
-            'gender' => ['string','max:20'],
+            'profileImage' => [
+                'file' => 'min:10', 'max:4096', 'mimes:jpg,jpeg,png',
+            ],
+            'gender' => ['string', 'max:20'],
             'address' => 'string|max:500',
             'contactNo' => 'integer|min:10|max:10'
         ];
