@@ -8,7 +8,8 @@ Route::middleware('admin')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('admin/showUsers', [AdminController::class, 'showUsers'])->name('admin.showUsers');
     Route::put('admin/user/toggle/{user}', [AdminController::class, 'userToggle'])->name('user.toggle');
-
+    Route::get('admin/user/edit/{user}', [AdminController::class, 'editUser'])->name('admin.user.edit');
+    Route::patch('admin/user/edit', [AdminController::class, 'updateUser'])->name('admin.user.update');
 });
 
 Route::middleware('auth')->group(function () {

@@ -14,6 +14,8 @@ use App\Repositories\UserRepositoryInterface;
 use App\Repositories\PostRepositoryInterface;
 use App\Repositories\SettingRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -45,8 +47,8 @@ class AdminController extends Controller
         ]);
 
         $users = $this->userRepository->getAll($request);
-        
-        return view('admin.showUsers', compact('users','request'));
+
+        return view('admin.showUsers', compact('users', 'request'));
     }
 
     public function userToggle(User $user)
@@ -71,5 +73,48 @@ class AdminController extends Controller
 
         $this->settingRepository->checkOrCreateForCurrentDay($data);
         return Redirect::to('admin/settings')->with('success', __('messages.settingsUpdated'));
+    }
+
+    public function editUser(User $user): View
+    {
+        $gender = Config::get('gender');
+        $route = "admin.user.update";
+        return view('profile.edit', compact('user', 'gender','route'));
+    }
+
+    public function updateUser(Request $request): RedirectResponse
+    {
+        // if hidden input is removed. return error.
+        if(empty($request->userId)) {
+            return Redirect::route('admin.user.edit')->with('error', 'Could not update profile. Please try again later.');
+        }
+        
+        $userId = $request->userId;
+
+        // get user info to show
+        $user = $this->userRepository->find($userId);
+
+        $data = $request->validate([
+            'name' => ['string', 'max:255'],
+            'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($userId)],
+            'lastName' => ['string', 'max:255'],
+            'dob' => ['date', 'before:' . now()->subYears(13)->format('Y-m-d')],
+            'profileImage' => [
+                'file' => 'min:1', 'max:4096', 'mimes:jpg,jpeg,png',
+            ],
+            'gender' => ['string', 'max:20'],
+            'address' => 'string|max:500',
+            'contactNo' => 'digits:10'
+        ],[
+            'profileImage.max' => 'The profile image size must not exceed 4 MB.',
+            'profileImage.min' => 'The profile image must have a minimum size of 1 KB.',
+        ]);
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+        
+        $this->userRepository->update($userId, $data);
+        return Redirect::route('admin.user.edit', $user)->with('status', 'profile-updated');
     }
 }
