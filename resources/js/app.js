@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let contactNo = document.querySelector("#contactNo");
     const updateToZeroIfLess = (e) => {
         if (e.target.value < 0) {
-            e.target.value = 0;
+            e.target.value = '';
         }
     };
     if (contactNo != null) {

@@ -28,33 +28,31 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAll(Request $request)
     {
-        $orderByColumn = 'created_at';
-        $orderBy = 'desc';
+
+        $orderByArray = [];
 
         if ($request->filled('sortEmail')) {
-
-            $orderByColumn = 'email';
-
             if ($request->sortEmail == 'desc') {
-                $orderBy = 'asc';
+                $orderByArray['email'] = 'asc';
             } else {
-                $orderBy = 'desc';
+                $orderByArray['email'] = 'desc';
             }
         }
 
         if ($request->filled('sortUser')) {
-
-            $orderByColumn = 'name';
-
             if ($request->sortUser == 'desc') {
-                $orderBy = 'asc';
+                $orderByArray['name'] = 'asc';
             } else {
-                $orderBy = 'desc';
+                $orderByArray['name'] = 'desc';
             }
         }
 
         $paginationLimit = Config::get('pagination.limit');
-        $query = $this->getUsersWithRoleUser()->orderBy($orderByColumn, $orderBy);
+        $query = $this->getUsersWithRoleUser();
+
+        foreach ($orderByArray as $column => $direction) {
+            $query->orderBy($column, $direction);
+        }
 
         $searchName = $request->input('searchName');
         $searchEmail = $request->input('searchEmail');
