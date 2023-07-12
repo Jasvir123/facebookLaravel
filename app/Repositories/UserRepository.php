@@ -54,7 +54,9 @@ class UserRepository implements UserRepositoryInterface
 
     public function create($data)
     {
-        $data['profileImage'] = $this->getStorePathFromFile($data['profileImage'], self::STORE_PROFILE_IMAGE_PATH);
+        if(isset($data['profileImage'])) {
+            $data['profileImage'] = $this->getStorePathFromFile($data['profileImage'], self::STORE_PROFILE_IMAGE_PATH);
+        }
 
         $createdUser = $this->user->create($data);
 
