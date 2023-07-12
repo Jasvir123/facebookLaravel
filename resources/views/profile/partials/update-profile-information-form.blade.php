@@ -96,7 +96,7 @@
         <!-- Contact Number -->
         <div class="mt-4">
             <x-input-label for="contactNo" :value="__('Contact Number')" />
-            <x-text-input id="contactNo" class="block mt-1 w-full" type="tel" name="contactNo" :value="old('contactNo', $user->contactNo)" autofocus
+            <x-text-input id="contactNo" class="block mt-1 w-full" type="number" name="contactNo" :value="old('contactNo', $user->contactNo)" autofocus
                 autocomplete="contact number" />
             <x-input-error :messages="$errors->get('contactNo')" class="mt-2" />
         </div>

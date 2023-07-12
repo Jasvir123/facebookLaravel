@@ -26,7 +26,7 @@ class ProfileUpdateRequest extends FormRequest
                 ->max(12 * 1024),],
             'gender' => ['string','max:20'],
             'address' => 'string|max:500',
-            'contactNo' => 'string|min:10|max:10'
+            'contactNo' => 'integer|min:10|max:10'
         ];
     }
 }
