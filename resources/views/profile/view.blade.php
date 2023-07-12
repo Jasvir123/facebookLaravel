@@ -17,7 +17,13 @@
             @else
                 <p>No Image found. Edit Profile to add profile image.</p>
                 <x-primary-button type="button" class="ml-3">
-                    <a href="/profile#profileImage">Edit Profile</a>
+                    @role('admin')
+                        <a href="{{ route('admin.user.edit', $user) }}">Edit Profile</a>
+                    @endrole
+
+                    @role('user')
+                        <a href="/profile#profileImage">Edit Profile</a>
+                    @endrole
                 </x-primary-button>
             @endif
 
