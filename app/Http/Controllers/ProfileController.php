@@ -53,14 +53,14 @@ class ProfileController extends Controller
             'lastName' => ['string', 'max:255'],
             'dob' => ['date', 'before:' . now()->subYears(13)->format('Y-m-d')],
             'profileImage' => [
-                'file' => 'min:10', 'max:4096', 'mimes:jpg,jpeg,png',
+                'file' => 'min:1', 'max:4096', 'mimes:jpg,jpeg,png',
             ],
             'gender' => ['string', 'max:20'],
             'address' => 'string|max:500',
             'contactNo' => 'digits:10'
         ],[
             'profileImage.max' => 'The profile image size must not exceed 4 MB.',
-            'profileImage.min' => 'The profile image must have a minimum size of 10 KB.',
+            'profileImage.min' => 'The profile image must have a minimum size of 1 KB.',
         ]);
 
         if ($request->user()->isDirty('email')) {

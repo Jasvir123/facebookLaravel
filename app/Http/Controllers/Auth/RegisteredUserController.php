@@ -51,11 +51,11 @@ class RegisteredUserController extends Controller
             'address' => 'required|string|max:500',
             'contactNo' => 'required|digits:10',
             'profileImage' => [
-                'file' => 'min:10', 'max:4096', 'mimes:jpg,jpeg,png',
+                'file' => 'min:1', 'max:4096', 'mimes:jpg,jpeg,png',
             ],
         ], [
             'profileImage.max' => 'The profile image size must not exceed 4 MB.',
-            'profileImage.min' => 'The profile image must have a minimum size of 10 KB.',
+            'profileImage.min' => 'The profile image must have a minimum size of 1 KB.',
         ]);
         $user = $this->userRepository->create($data);
 
