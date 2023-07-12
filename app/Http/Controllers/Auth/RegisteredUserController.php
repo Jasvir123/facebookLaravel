@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'dob' => ['required', 'date', 'before:' . now()->subYears(13)->format('Y-m-d')],
+            'dob' => ['required', 'date', 'before:' . now()->subYears(13)->format('Y-m-d'),'after:1971-01-01'],
             'gender' => ['required', 'string', 'max:20'],
             'address' => 'required|string|max:500',
             'contactNo' => 'required|digits:10',

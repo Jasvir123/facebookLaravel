@@ -97,7 +97,7 @@ class AdminController extends Controller
             'name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($userId)],
             'lastName' => ['string', 'max:255'],
-            'dob' => ['date', 'before:' . now()->subYears(13)->format('Y-m-d')],
+            'dob' => ['date', 'before:' . now()->subYears(13)->format('Y-m-d'),'after:1971-01-01'],
             'profileImage' => [
                 'file' => 'min:1', 'max:4096', 'mimes:jpg,jpeg,png',
             ],
