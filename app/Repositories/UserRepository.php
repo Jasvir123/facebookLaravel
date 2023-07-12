@@ -29,22 +29,20 @@ class UserRepository implements UserRepositoryInterface
     public function getAll(Request $request)
     {
 
-        $orderByArray['created_at'] = 'desc';
-
         if ($request->filled('sortEmail')) {
             if ($request->sortEmail == 'desc') {
                 $orderByArray['email'] = 'asc';
             } else {
                 $orderByArray['email'] = 'desc';
             }
-        }
-
-        if ($request->filled('sortUser')) {
+        } elseif ($request->filled('sortUser')) {
             if ($request->sortUser == 'desc') {
                 $orderByArray['name'] = 'asc';
             } else {
                 $orderByArray['name'] = 'desc';
             }
+        } else {
+            $orderByArray['created_at'] = 'desc';
         }
 
         $paginationLimit = Config::get('pagination.limit');
@@ -67,7 +65,6 @@ class UserRepository implements UserRepositoryInterface
         if ($searchEmail) {
             $query->where('email', 'like', "%$searchEmail%");
         }
-
         return $query->paginate($paginationLimit)->withQueryString();
     }
 
