@@ -44,15 +44,15 @@ class RegisteredUserController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'dob' => ['required', 'date', 'before:' . now()->subYears(13)->format('Y-m-d')],
-            'profileImage' => ['required', File::types(['jpg', 'png'])
+            'profileImage' => [File::types(['jpg', 'png'])
                 ->min(1)
                 ->max(12 * 1024),],
             'gender' => ['required','string','max:20'],
             'address' => 'required|string|max:500',
-            'contactNo' => 'required|string|min:7|max:20',
+            'contactNo' => 'required|string|min:10|max:10'
         ]);
 
         $user = $this->userRepository->create($data);

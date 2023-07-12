@@ -19,14 +19,14 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'lastName' => ['required', 'string', 'max:255'],
-            'dob' => ['required', 'date', 'before:' . now()->subYears(13)->format('Y-m-d')],
-            'profileImage' => ['required', File::types(['jpg', 'png'])
+            'lastName' => ['string', 'max:255'],
+            'dob' => ['date', 'before:' . now()->subYears(13)->format('Y-m-d')],
+            'profileImage' => [File::types(['jpg', 'png'])
                 ->min(1)
                 ->max(12 * 1024),],
-            'gender' => ['required','string','max:20'],
-            'address' => 'required|string|max:500',
-            'contactNo' => 'required|string|min:10|max:10'
+            'gender' => ['string','max:20'],
+            'address' => 'string|max:500',
+            'contactNo' => 'string|min:10|max:10'
         ];
     }
 }
