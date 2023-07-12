@@ -11,7 +11,7 @@
 
 
         <div class="bg-white rounded-md m-6 p-6 w-1/2 flex flex-col justify-center items-center">
-            <img class="rounded-full overflow-hidden h-60 w-60 object-cover" src="{{ !empty($user->profileImage) ? Storage::url($user->profileImage) : '' }}" alt="">
+            <img class="rounded-full overflow-hidden h-60 w-60 object-cover" src="{{ !empty($user->profileImage) ? Storage::url($user->profileImage) : '' }}" alt="profile image">
             <span class="text-gray-500 mt-2 text-lg">
                 {{ $user->fullName }}
             </span>

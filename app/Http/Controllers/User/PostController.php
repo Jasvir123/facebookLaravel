@@ -50,10 +50,13 @@ class PostController extends Controller
     {
         $data = $request->validate([
             'description' => ['required', 'string', 'max:4000'],
-            'media' => ['required', File::types(['jpg', 'png', 'mp4', 'wav'])
-                ->min(1)
-                ->max(12 * 1024),],
+            'media' => [
+                'file' => 'min:1', 'max:4096', 'mimes:jpg,jpeg,png',
+            ],
             'visibility' => ['required']
+        ], [
+            'profileImage.max' => 'The profile image size must not exceed 4 MB.',
+            'profileImage.min' => 'The profile image must have a minimum size of 1 KB.',
         ]);
 
 

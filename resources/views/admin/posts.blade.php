@@ -64,12 +64,15 @@
                             </td>
 
                             <td class="px-6 py-4 max-h-250 whitespace-nowrap">
-                                <a href="{{ !empty($post->media) ? Storage::url($post->media) : '' }}" target="_blank"
-                                    rel="noopener noreferrer">
-                                    <img class="rounded-lg max-h-250"
-                                        src="{{ !empty($post->media) ? Storage::url($post->media) : '' }}"
+                                @if(!empty($post->media))
+                                    <a href="{{ !empty($post->media) ? Storage::url($post->media) : '' }}" target="_blank"
+                                        rel="noopener noreferrer">
+                                        <img class="rounded-lg max-h-250" src="{{ Storage::url($post->media) }}"
                                         alt="Post Image">
-                                </a>
+                                    </a>
+                                @else
+                                    <p>No media.</p>
+                                @endif
                             </td>
 
                             <td class="px-6 py-4 whitespace-nowrap">

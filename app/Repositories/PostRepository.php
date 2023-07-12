@@ -41,18 +41,18 @@ class PostRepository implements PostRepositoryInterface
             'comment.user'
         ])->orderByDesc('created_at');
 
-        
+
         if ($searchUser) {
             $query->whereHas('user', function ($query) use ($searchUser) {
                 $query->where('name', 'like', "%$searchUser%")
-                      ->orWhere('lastName', 'like', "%$searchUser%");
+                    ->orWhere('lastName', 'like', "%$searchUser%");
             });
         }
-        
+
         if ($searchDescription) {
             $query->where('description', 'like', "%{$searchDescription}%");
         }
-        
+
         return $query->paginate($paginationLimit);
     }
 
@@ -64,14 +64,18 @@ class PostRepository implements PostRepositoryInterface
     public function create($data)
     {
         $data['user_id'] = auth()->id();
-        $data['media'] = $this->getStorePathFromFile($data['media'], self::STORE_POST_IMAGE_PATH);
+        if (isset($data['media'])) {
+            $data['media'] = $this->getStorePathFromFile($data['media'], self::STORE_POST_IMAGE_PATH);
+        }
 
         return $this->post->create($data);
     }
 
     public function update($id, $data)
     {
-        $data['media'] = $this->getStorePathFromFile($data['media'], self::STORE_POST_IMAGE_PATH);
+        if (isset($data['media'])) {
+            $data['media'] = $this->getStorePathFromFile($data['media'], self::STORE_POST_IMAGE_PATH);
+        }
         return $this->post->where('id', $id)->update($data);
     }
 
@@ -89,8 +93,8 @@ class PostRepository implements PostRepositoryInterface
     {
         $today = Carbon::today();
         return $this->post::whereDate('created_at', $today)
-        ->where('user_id', auth()->id())
-        ->get()->count();
+            ->where('user_id', auth()->id())
+            ->get()->count();
     }
 
     public function canPostToday()

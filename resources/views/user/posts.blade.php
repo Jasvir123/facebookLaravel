@@ -22,9 +22,10 @@
                 </div>
 
 
-                <img class="rounded-lg" src="{{ !empty($post->media) ? Storage::url($post->media) : '' }}"
+                @if(!empty($post->media))
+                    <img class="rounded-lg" src="{{ Storage::url($post->media) }}"
                     alt="Post Image">
-
+                @endif
                 <span class="text-gray-700 p-2">{{ $post->description }}</span>
 
                 <div class="flex items-center justify-between">
