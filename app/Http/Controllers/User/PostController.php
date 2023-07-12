@@ -55,8 +55,8 @@ class PostController extends Controller
             ],
             'visibility' => ['required']
         ], [
-            'profileImage.max' => 'The profile image size must not exceed 4 MB.',
-            'profileImage.min' => 'The profile image must have a minimum size of 1 KB.',
+            'media.max' => 'The profile image size must not exceed 4 MB.',
+            'media.min' => 'The profile image must have a minimum size of 1 KB.',
         ]);
 
 
