@@ -22,9 +22,7 @@ class ProfileController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function index(): View {
-        $userId = auth()->id();
-        $user = $this->userRepository->find($userId);
+    public function index(User $user): View {
         
         return view('profile.view', compact('user'));
     }
