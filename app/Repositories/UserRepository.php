@@ -21,30 +21,56 @@ class UserRepository implements UserRepositoryInterface
         $this->user = $user;
     }
 
-    public function getUsersWithRoleUser() {
+    public function getUsersWithRoleUser()
+    {
         return Role::where('name', 'user')->first()->users();
     }
 
     public function getAll(Request $request)
     {
+        $orderByColumn = 'created_at';
+        $orderBy = 'desc';
+
+        if ($request->filled('sortEmail')) {
+
+            $orderByColumn = 'email';
+
+            if ($request->sortEmail == 'desc') {
+                $orderBy = 'asc';
+            } else {
+                $orderBy = 'desc';
+            }
+        }
+
+        if ($request->filled('sortUser')) {
+
+            $orderByColumn = 'name';
+
+            if ($request->sortUser == 'desc') {
+                $orderBy = 'asc';
+            } else {
+                $orderBy = 'desc';
+            }
+        }
+
         $paginationLimit = Config::get('pagination.limit');
-        $query = $this->getUsersWithRoleUser()->orderByDesc('created_at');
+        $query = $this->getUsersWithRoleUser()->orderBy($orderByColumn, $orderBy);
 
         $searchName = $request->input('searchName');
         $searchEmail = $request->input('searchEmail');
 
         if ($searchName) {
-            $query->where(function($query) use($searchName){
-                $query->where('name','like',"%$searchName%");
-                $query->orWhere('lastName','like',"%$searchName%");
+            $query->where(function ($query) use ($searchName) {
+                $query->where('name', 'like', "%$searchName%");
+                $query->orWhere('lastName', 'like', "%$searchName%");
             });
         }
 
         if ($searchEmail) {
-            $query->where('email','like',"%$searchEmail%");
+            $query->where('email', 'like', "%$searchEmail%");
         }
 
-        return $query->paginate($paginationLimit);
+        return $query->paginate($paginationLimit)->withQueryString();
     }
 
     public function find($id)
@@ -54,7 +80,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function create($data)
     {
-        if(isset($data['profileImage'])) {
+        if (isset($data['profileImage'])) {
             $data['profileImage'] = $this->getStorePathFromFile($data['profileImage'], self::STORE_PROFILE_IMAGE_PATH);
         }
 
@@ -68,7 +94,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function update($id, $data)
     {
-        if(isset($data['profileImage'])) {
+        if (isset($data['profileImage'])) {
             $data['profileImage'] = $this->getStorePathFromFile($data['profileImage'], self::STORE_PROFILE_IMAGE_PATH);
         }
 

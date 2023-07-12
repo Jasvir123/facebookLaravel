@@ -33,10 +33,44 @@
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Name
+                            
+                            @php
+                                $userSortClasses = 'opacity-50';
+                                if($request->has('sortUser')) {
+                                    $userSortClasses = 'underline';
+                                }
+                            @endphp
+
+                            @if($request->sortUser == 'desc')
+                                <a href="?sortUser=asc">
+                                    <i class="fas fa-sort-amount-up {{ $userSortClasses }}"></i>
+                                </a>
+                            @else
+                                <a href="?sortUser=desc">
+                                    <i class="fas fa-sort-amount-down {{ $userSortClasses }}"></i>
+                                </a>
+                            @endif
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Email
+
+                            @php
+                                $emailSortClasses = 'opacity-50';
+                                if($request->has('sortEmail')) {
+                                    $emailSortClasses = 'underline';
+                                }
+                            @endphp
+
+                            @if($request->sortEmail == 'desc')
+                                <a href="?sortEmail=asc">
+                                    <i class="fas fa-sort-amount-up {{ $emailSortClasses }}"></i>
+                                </a>
+                            @else
+                                <a href="?sortEmail=desc">
+                                    <i class="fas fa-sort-amount-down {{ $emailSortClasses }}"></i>
+                                </a>
+                            @endif
                         </th>
 
                         <th scope="col"

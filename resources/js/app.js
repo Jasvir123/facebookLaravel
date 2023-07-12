@@ -12,4 +12,15 @@ document.addEventListener("DOMContentLoaded", function () {
     if (numberInput != null && numberInput.value == 0) {
         numberInput.value = ""; // Set empty value
     }
+
+    let contactNo = document.querySelector("#contactNo");
+    const updateToZeroIfLess = (e) => {
+        if (e.target.value < 0) {
+            e.target.value = 0;
+        }
+    };
+    if (contactNo != null) {
+        contactNo.addEventListener("keydown", updateToZeroIfLess);
+        contactNo.addEventListener("keyup", updateToZeroIfLess);
+    }
 });
