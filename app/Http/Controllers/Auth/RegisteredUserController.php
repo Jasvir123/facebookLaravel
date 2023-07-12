@@ -30,8 +30,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        $gender = Config::get('gender');
-        return view('auth.register', compact('gender'));
+        return view('auth.register');
     }
 
     /**

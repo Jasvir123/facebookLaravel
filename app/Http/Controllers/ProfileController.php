@@ -31,12 +31,9 @@ class ProfileController extends Controller
      * Display the user's profile form.
      */
     public function edit(Request $request): View
-    {
-        $gender = Config::get('gender');
-        
+    {        
         return view('profile.edit', [
-            'user' => $request->user(),
-            'gender' => $gender
+            'user' => $request->user()
         ]);
     }
 

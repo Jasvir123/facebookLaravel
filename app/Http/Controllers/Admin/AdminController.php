@@ -77,9 +77,8 @@ class AdminController extends Controller
 
     public function editUser(User $user): View
     {
-        $gender = Config::get('gender');
         $route = "admin.user.update";
-        return view('profile.edit', compact('user', 'gender','route'));
+        return view('profile.edit', compact('user', 'route'));
     }
 
     public function updateUser(Request $request): RedirectResponse

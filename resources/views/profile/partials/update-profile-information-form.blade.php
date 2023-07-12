@@ -50,7 +50,8 @@
             <x-input-label for="gender" :value="__('Gender')" />
             <x-select-input class="w-full" id="gender" name="gender">
                 <option value="">Select gender</option>
-                @foreach ($gender as $genderOption)
+
+                @foreach (StaticArray::$gender as $genderOption)
                     <option value="{{ $genderOption }}" @selected($genderOption == $user->gender)>{{ ucwords($genderOption) }}</option>
                 @endforeach
             </x-select-input>
