@@ -18,6 +18,7 @@
 
                 <div class="post-header flex items-center justify-between mb-2">
                     <span class="text-black font-bold">{{ $post->user->name }}</span>
+                    <span class="text-black font-bold">{{ date("F d, Y", strtotime($post->created_at)) }}</span>
                 </div>
 
 
