@@ -37,7 +37,7 @@
             <x-select-input class="w-full" id="gender" name="gender">
                 <option value="">Select gender</option>
                 @foreach ($gender as $genderOption)
-                    <option value="{{ $genderOption }}" @selected($genderOption == $user->gender)>{{ $genderOption }}</option>
+                    <option value="{{ $genderOption }}" @selected($genderOption == $user->gender)>{{ ucwords($genderOption) }}</option>
                 @endforeach
             </x-select-input>
             <x-input-error :messages="$errors->get('gender')" class="mt-2" />

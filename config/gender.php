@@ -1,4 +1,4 @@
 <?php
 return [
-    "Male", "Female", "Others"
+    "male", "female", "others"
 ];
