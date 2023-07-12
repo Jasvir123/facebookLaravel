@@ -50,7 +50,7 @@
                     @foreach ($users as $user)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                {{ $user->fullName }}
+                                @include('user.partials.user-name-link', ['user' => $user])
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 {{ $user->email }}

@@ -56,7 +56,7 @@
                         <tr>
 
                             <td class="px-6 py-4 whitespace-nowrap">
-                                {{ $post->user->name }}
+                                @include('user.partials.user-name-link', ['user' => $post->user])
                             </td>
 
                             <td class="px-6 py-4 whitespace-nowrap">

@@ -17,7 +17,7 @@
             <div class="mx-10 my-2 post flex flex-col justify-center bg-gradient-to-r from-teal-100 rounded-lg p-4">
 
                 <div class="post-header flex items-center justify-between mb-2">
-                    <span class="text-black font-bold">{{ $post->user->name }}</span>
+                    @include('user.partials.user-name-link', ['user' => $post->user, 'class' => "text-black font-bold"])
                     <span class="text-black font-bold">{{ date("F d, Y", strtotime($post->created_at)) }}</span>
                 </div>
 
@@ -40,7 +40,8 @@
 
                     @forelse ($post->comment as $comment)
                         <div class="my-1 flex flex-col justify-center bg-gradient-to-r from-cyan-100 rounded-md p-2">
-                            <span class="text-xs">{{ $comment->user->name }}</span>
+                            
+                            @include('user.partials.user-name-link', ['user' => $comment->user, 'class' => "text-xs"])
                             <span class="mx-5 text-sm p-2">{{ $comment->comment }}</span>
                         </div>
 

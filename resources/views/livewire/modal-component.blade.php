@@ -25,7 +25,7 @@
 
                 @forelse ($comments as $comment)
                     <div class="my-1 flex flex-col justify-center bg-gradient-to-r from-cyan-100 rounded-md p-2">
-                        <span class="text-xs">{{ $comment->user->name }}</span>
+                        @include('user.partials.user-name-link', ['user' => $comment->user, "class" => "text-xs"])
                         <span class="mx-5 text-sm p-2">{{ $comment->comment }}</span>
                     </div>
 
