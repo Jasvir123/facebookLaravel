@@ -43,7 +43,7 @@
                     <tr>
                         <th class="py-2 px-4 border-b border-gray-300">DOB</th>
                         <td class="py-2 px-4 border-b border-gray-300 text-gray-500">
-                            {{ date(Config::get('dateTimeFormat.date'), strtotime($user->dob)) }}</td>
+                            {{ date(StaticArray::$dateTimeFormat['date'], strtotime($user->dob)) }}</td>
                     </tr>
                     <tr>
                         <th class="py-2 px-4 border-b border-gray-300">Contact No</th>

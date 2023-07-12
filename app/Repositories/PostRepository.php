@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Repositories\SettingRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use StaticArray;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -27,7 +28,7 @@ class PostRepository implements PostRepositoryInterface
     public function getAll(Request $request)
     {
         $loggedInUserId = auth()->id();
-        $paginationLimit = Config::get('pagination.limit');
+        $paginationLimit = StaticArray::$paginationLimit;
 
         $searchUser = $request->input('searchUser');
         $searchDescription = $request->input('searchDescription');

@@ -7,6 +7,7 @@ use App\Traits\FileStorageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Spatie\Permission\Models\Role;
+use StaticArray;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -45,7 +46,7 @@ class UserRepository implements UserRepositoryInterface
             $orderByArray['created_at'] = 'desc';
         }
 
-        $paginationLimit = Config::get('pagination.limit');
+        $paginationLimit = StaticArray::$paginationLimit;
         $query = $this->getUsersWithRoleUser();
 
         foreach ($orderByArray as $column => $direction) {
